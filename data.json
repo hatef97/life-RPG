@@ -7,4 +7,1257 @@
     "user": 3,
     "content_type": 8,
     "object_id": "1",
-    "object_repr": 
+    "object_repr": "👨‍💻 2h Fitec Deep Work",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$q4SGZlJ0aiDzKXNRZLMn8o$g0OhunpB/TschmWUB0xV0rOiAUcjIXOCBl+0JrEJMwc=",
+    "last_login": "2026-05-09T00:40:49.024Z",
+    "is_superuser": true,
+    "username": "hatef",
+    "first_name": "",
+    "last_name": "",
+    "email": "hatef@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-05-08T23:45:35.967Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "d49tnmw7jl4208764qm52c3seevk8jzv",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGllrJ_5R0nMGa7P24gCypTipEHeHSCmgfTPzXiLitpa49bzEOYmz0OL0u01Ij1x3kO5Yb01Sq-syT3JX5EG7vLaUn5fD_Tso2Mu3zpjIAdPgybJVFlIwmiGg0wOb0SrFRrGyztPo2DiPA0CAQI6AvWXx_gDgOjdW:1wLUp7:COr9M6HcDuP18jl6Fc0ElnT--F1-GPgTjowbEbG7FYg",
+    "expire_date": "2026-05-22T23:41:37.959Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "r38uxrkfptvgco0748k3incr68tadu3i",
+  "fields": {
+    "session_data": ".eJxVjLsOAiEQAP-F2hCQAxZLe7-BLLuLnJq75B6V8d8NyRXazkzmrTLuW8v7KkseWV3UoE6_rCA9ZeqCHzjdZ03ztC1j0T3Rh131bWZ5XY_2b9BwbX0rMQ0cfQ3OD9YBMVeo6GKVQgCGrUckRqCUKjCdrYQUDIrEksA49fkC_iY4tg:1wLVNx:dgJKM70v_GdajOnOJMcaFuLuvJ-jv4crY6QLxnPe1N8",
+    "expire_date": "2026-05-23T00:17:37.294Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "thr1l75dgsu8z3yfr4rpoksc8pov3660",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlnebOIPJT1nsHb9wQFkS3FSIe4OkVJA-2bmvYSnbS1-62nxcxRnAeL0uzGFR6o7iHeqtyZDq-sys9wVedAury2m5-Vw_w4K9fKtVdCYRnZoonaQUMeccUwKhsFYyDRliwRoUQd2FplV1mAmrZitso7E-wPRNzdH:1wLUnu:lKMeXk-6XYGyBk0P7ouOqy2Wd_a953aXJzvrfC78I34",
+    "expire_date": "2026-05-22T23:40:22.663Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "u3v2jn6sih75r5poxneeeon0m75wtz2u",
+  "fields": {
+    "session_data": ".eJxVjMEOwiAQRP-FsyFAqbAevfsNZGEXqRpISnsy_rtt0oMe5jLvzbxFwHUpYe08h4nERYzi9NtFTE-uO6AH1nuTqdVlnqLcFXnQLm-N-HU93L-Dgr1sa0SrnSJH1g1aARNABNAZk0-ayJxTNhyzG4CtjqS2ePSGwfgRkx3E5wv1ijhp:1wLVOl:BxXCb7-r2ByCbevAZkxVUGcF2w7IV2veHkvihHYG36U",
+    "expire_date": "2026-05-23T00:18:27.881Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "wyz6da5avebplgtyzld65mtjavfnk0vi",
+  "fields": {
+    "session_data": ".eJxVjDsOwyAQBe9CHSHzM5Ayvc-AFnYJTiKQjF1FuXtsyUXSvpl5bxZgW0vYOi1hRnZlgl1-twjpSfUA-IB6bzy1ui5z5IfCT9r51JBet9P9OyjQy15LM1iRrQVhBorobNJakSSVpUebE2oFuyE8GsgxC-dQe08exjRKk4h9vttBOBE:1wLUnY:Agqyj2SVLfS5iB8ZtgUuzU4ZXCO_1bO7aoqT7EjPt6E",
+    "expire_date": "2026-05-22T23:40:00.570Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "zvnady80d9xooibrwn1k5czyoiwvrt5k",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSE8hpG6dN9vIMCMUjWQlHZl_HfbpAvd3nPOfYsQ16WEtfMcJhIXYcXpd0sxP7nugB6x3pvMrS7zlOSuyIN2OTbi1_Vw_w5K7GWrDShI5EgrDVulo3WAlgefUybvEKLymcEw2gRAAyB6MuaGBlDpsxKfL9SVNwA:1wLVkP:apxbz3ETAP03EP0rtsdqVYouQO1gupJkgmTglABq-fo",
+    "expire_date": "2026-05-23T00:40:49.040Z"
+  }
+},
+{
+  "model": "core.profile",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "display_name": "hatef",
+    "level": 1,
+    "xp": 75,
+    "coins": 20,
+    "title": "Lost Starter",
+    "hp": 82,
+    "stamina": 72,
+    "focus": 76,
+    "momentum": 64,
+    "intelligence": 12,
+    "discipline": 12,
+    "strength": 8,
+    "communication": 7,
+    "charisma": 7,
+    "builder": 14,
+    "created_at": "2026-05-08T23:45:36.561Z",
+    "updated_at": "2026-05-09T00:41:05.293Z"
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 1,
+  "fields": {
+    "name": "👨‍💻 2h Fitec Deep Work",
+    "description": "دو ساعت کار عمیق روی Fittec بدون حواس‌پرتی.",
+    "xp_reward": 50,
+    "coin_reward": 18,
+    "attribute_rewards": {
+      "builder": 3,
+      "discipline": 2
+    },
+    "is_active": true,
+    "category": "work",
+    "ordering": 10
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 2,
+  "fields": {
+    "name": "🇩🇪 German 90m",
+    "description": "جلسه کامل آلمانی برای مسیر B2.",
+    "xp_reward": 60,
+    "coin_reward": 15,
+    "attribute_rewards": {
+      "intelligence": 3,
+      "communication": 2
+    },
+    "is_active": true,
+    "category": "german",
+    "ordering": 20
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 3,
+  "fields": {
+    "name": "🍽️ Hit Calorie Target",
+    "description": "کالری و پروتئین هدف امروز زده شود.",
+    "xp_reward": 40,
+    "coin_reward": 10,
+    "attribute_rewards": {
+      "strength": 2,
+      "discipline": 1
+    },
+    "is_active": true,
+    "category": "fitness",
+    "ordering": 30
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 4,
+  "fields": {
+    "name": "🚬 ≤15 Cigarettes",
+    "description": "کنترل نیکوتین و نگه داشتن سقف روزانه.",
+    "xp_reward": 40,
+    "coin_reward": 12,
+    "attribute_rewards": {
+      "discipline": 3
+    },
+    "is_active": true,
+    "category": "health",
+    "ordering": 40
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 5,
+  "fields": {
+    "name": "😴 Sleep Before 2AM",
+    "description": "خاموشی قبل از ۲ بامداد برای بازسازی.",
+    "xp_reward": 30,
+    "coin_reward": 8,
+    "attribute_rewards": {
+      "discipline": 1
+    },
+    "is_active": true,
+    "category": "recovery",
+    "ordering": 50
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 6,
+  "fields": {
+    "name": "🧴 Skincare x2",
+    "description": "روتین صبح و شب.",
+    "xp_reward": 20,
+    "coin_reward": 5,
+    "attribute_rewards": {
+      "charisma": 1
+    },
+    "is_active": true,
+    "category": "hygiene",
+    "ordering": 60
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 7,
+  "fields": {
+    "name": "🪥 Brush Teeth x2",
+    "description": "دو بار مسواک کامل.",
+    "xp_reward": 15,
+    "coin_reward": 4,
+    "attribute_rewards": {
+      "charisma": 1
+    },
+    "is_active": true,
+    "category": "hygiene",
+    "ordering": 70
+  }
+},
+{
+  "model": "core.dailyquest",
+  "pk": 8,
+  "fields": {
+    "name": "🐈 Clean Dobby Litter",
+    "description": "محیط تمیز برای Dobby.",
+    "xp_reward": 20,
+    "coin_reward": 5,
+    "attribute_rewards": {
+      "discipline": 1
+    },
+    "is_active": true,
+    "category": "home",
+    "ordering": 80
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 1,
+  "fields": {
+    "name": "30m Deep Work",
+    "description": "یک اسپرینت کوتاه اما واقعی.",
+    "xp_reward": 20,
+    "coin_reward": 6,
+    "attribute_rewards": {
+      "builder": 1,
+      "discipline": 1
+    },
+    "is_active": true,
+    "category": "work",
+    "ordering": 10
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 2,
+  "fields": {
+    "name": "Linear Issue Closed",
+    "description": "یک Issue واقعی بسته شد.",
+    "xp_reward": 35,
+    "coin_reward": 10,
+    "attribute_rewards": {
+      "builder": 2
+    },
+    "is_active": true,
+    "category": "work",
+    "ordering": 20
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 3,
+  "fields": {
+    "name": "Important Bug Fixed",
+    "description": "Bug مهم بدون بدهی جدید بسته شد.",
+    "xp_reward": 45,
+    "coin_reward": 12,
+    "attribute_rewards": {
+      "builder": 2,
+      "intelligence": 1
+    },
+    "is_active": true,
+    "category": "work",
+    "ordering": 30
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 4,
+  "fields": {
+    "name": "Deploy / Release Task",
+    "description": "یک Release یا Deploy تمیز.",
+    "xp_reward": 50,
+    "coin_reward": 14,
+    "attribute_rewards": {
+      "builder": 3
+    },
+    "is_active": true,
+    "category": "shipping",
+    "ordering": 40
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 5,
+  "fields": {
+    "name": "German Speaking 20m",
+    "description": "تمرین صحبت کردن با صدای بلند.",
+    "xp_reward": 25,
+    "coin_reward": 7,
+    "attribute_rewards": {
+      "communication": 2
+    },
+    "is_active": true,
+    "category": "german",
+    "ordering": 50
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 6,
+  "fields": {
+    "name": "Listening / Shadowing",
+    "description": "شنیدن فعال و Shadowing.",
+    "xp_reward": 20,
+    "coin_reward": 5,
+    "attribute_rewards": {
+      "intelligence": 1,
+      "communication": 1
+    },
+    "is_active": true,
+    "category": "german",
+    "ordering": 60
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 7,
+  "fields": {
+    "name": "90m Gym Session",
+    "description": "تمرین کامل باشگاه.",
+    "xp_reward": 55,
+    "coin_reward": 14,
+    "attribute_rewards": {
+      "strength": 3,
+      "discipline": 1
+    },
+    "is_active": true,
+    "category": "fitness",
+    "ordering": 70
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 8,
+  "fields": {
+    "name": "Physique Progress Photo",
+    "description": "ثبت داده واقعی برای مسیر فیزیک.",
+    "xp_reward": 15,
+    "coin_reward": 4,
+    "attribute_rewards": {
+      "discipline": 1
+    },
+    "is_active": true,
+    "category": "fitness",
+    "ordering": 80
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 9,
+  "fields": {
+    "name": "Project Outreach",
+    "description": "پیام یا ارتباط ارزشمند برای پروژه.",
+    "xp_reward": 30,
+    "coin_reward": 8,
+    "attribute_rewards": {
+      "communication": 2,
+      "charisma": 1
+    },
+    "is_active": true,
+    "category": "social",
+    "ordering": 90
+  }
+},
+{
+  "model": "core.quickaction",
+  "pk": 10,
+  "fields": {
+    "name": "No Indoor Smoking",
+    "description": "یک تصمیم محیطی درست.",
+    "xp_reward": 25,
+    "coin_reward": 6,
+    "attribute_rewards": {
+      "discipline": 2
+    },
+    "is_active": true,
+    "category": "health",
+    "ordering": 100
+  }
+},
+{
+  "model": "core.quickactionlog",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "action": 4,
+    "created_at": "2026-05-09T00:28:43.601Z"
+  }
+},
+{
+  "model": "core.quickactionlog",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "action": 10,
+    "created_at": "2026-05-09T00:29:18.865Z"
+  }
+},
+{
+  "model": "core.boss",
+  "pk": 1,
+  "fields": {
+    "name": "🚀 Launch Beast",
+    "difficulty": "S",
+    "description": "بستن کارهای Launch و خروج از حالت تعلیق.",
+    "xp_reward": 180,
+    "coin_reward": 45,
+    "hp": 140,
+    "is_active": true,
+    "reset_weekly": true,
+    "ordering": 10
+  }
+},
+{
+  "model": "core.boss",
+  "pk": 2,
+  "fields": {
+    "name": "🇩🇪 Sprachjäger",
+    "difficulty": "A",
+    "description": "شکار B2 با تمرین‌های سنگین آلمانی.",
+    "xp_reward": 140,
+    "coin_reward": 32,
+    "hp": 120,
+    "is_active": true,
+    "reset_weekly": true,
+    "ordering": 20
+  }
+},
+{
+  "model": "core.boss",
+  "pk": 3,
+  "fields": {
+    "name": "🍖 Mass Builder",
+    "difficulty": "A",
+    "description": "کالری، تمرین و استمرار فیزیکی.",
+    "xp_reward": 130,
+    "coin_reward": 30,
+    "hp": 120,
+    "is_active": true,
+    "reset_weekly": true,
+    "ordering": 30
+  }
+},
+{
+  "model": "core.boss",
+  "pk": 4,
+  "fields": {
+    "name": "🌙 Night Hunter",
+    "difficulty": "S",
+    "description": "شکستن چرخه شب‌زنده‌داری.",
+    "xp_reward": 160,
+    "coin_reward": 38,
+    "hp": 130,
+    "is_active": true,
+    "reset_weekly": true,
+    "ordering": 40
+  }
+},
+{
+  "model": "core.boss",
+  "pk": 5,
+  "fields": {
+    "name": "🐍 Backend Forge",
+    "difficulty": "SS",
+    "description": "ساختن سیستم‌های Backend تمیز و قابل اتکا.",
+    "xp_reward": 220,
+    "coin_reward": 60,
+    "hp": 180,
+    "is_active": true,
+    "reset_weekly": true,
+    "ordering": 50
+  }
+},
+{
+  "model": "core.bossprogress",
+  "pk": 11,
+  "fields": {
+    "user": 3,
+    "boss": 1,
+    "damage": 0,
+    "cleared": false,
+    "week_start": "2026-05-04",
+    "updated_at": "2026-05-08T23:45:54.913Z"
+  }
+},
+{
+  "model": "core.bossprogress",
+  "pk": 12,
+  "fields": {
+    "user": 3,
+    "boss": 2,
+    "damage": 0,
+    "cleared": false,
+    "week_start": "2026-05-04",
+    "updated_at": "2026-05-08T23:45:54.922Z"
+  }
+},
+{
+  "model": "core.bossprogress",
+  "pk": 13,
+  "fields": {
+    "user": 3,
+    "boss": 3,
+    "damage": 0,
+    "cleared": false,
+    "week_start": "2026-05-04",
+    "updated_at": "2026-05-08T23:45:54.929Z"
+  }
+},
+{
+  "model": "core.bossprogress",
+  "pk": 14,
+  "fields": {
+    "user": 3,
+    "boss": 4,
+    "damage": 0,
+    "cleared": false,
+    "week_start": "2026-05-04",
+    "updated_at": "2026-05-08T23:45:54.936Z"
+  }
+},
+{
+  "model": "core.bossprogress",
+  "pk": 15,
+  "fields": {
+    "user": 3,
+    "boss": 5,
+    "damage": 0,
+    "cleared": false,
+    "week_start": "2026-05-04",
+    "updated_at": "2026-05-08T23:45:54.943Z"
+  }
+},
+{
+  "model": "core.giftfund",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "current_amount_million": "0.00",
+    "target_amount_million": "50.00",
+    "updated_at": "2026-05-08T23:45:54.949Z"
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 1,
+  "fields": {
+    "amount_million": "5.00",
+    "name": "First Sacrifice",
+    "xp_reward": 60,
+    "coin_reward": 12,
+    "badge_label": "5M Gift Badge",
+    "title_reward": "",
+    "ordering": 10
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 2,
+  "fields": {
+    "amount_million": "10.00",
+    "name": "Momentum Saver",
+    "xp_reward": 70,
+    "coin_reward": 14,
+    "badge_label": "10M Gift Badge",
+    "title_reward": "",
+    "ordering": 20
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 3,
+  "fields": {
+    "amount_million": "15.00",
+    "name": "Serious Intent",
+    "xp_reward": 80,
+    "coin_reward": 16,
+    "badge_label": "15M Gift Badge",
+    "title_reward": "",
+    "ordering": 30
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 4,
+  "fields": {
+    "amount_million": "20.00",
+    "name": "Premium Arc",
+    "xp_reward": 90,
+    "coin_reward": 18,
+    "badge_label": "20M Gift Badge",
+    "title_reward": "",
+    "ordering": 40
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 5,
+  "fields": {
+    "amount_million": "25.00",
+    "name": "Locked In",
+    "xp_reward": 100,
+    "coin_reward": 20,
+    "badge_label": "25M Gift Badge",
+    "title_reward": "Locked In",
+    "ordering": 50
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 6,
+  "fields": {
+    "amount_million": "30.00",
+    "name": "Rebuild Provider",
+    "xp_reward": 110,
+    "coin_reward": 22,
+    "badge_label": "30M Gift Badge",
+    "title_reward": "",
+    "ordering": 60
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 7,
+  "fields": {
+    "amount_million": "35.00",
+    "name": "Mission Focused",
+    "xp_reward": 120,
+    "coin_reward": 24,
+    "badge_label": "35M Gift Badge",
+    "title_reward": "",
+    "ordering": 70
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 8,
+  "fields": {
+    "amount_million": "40.00",
+    "name": "Main Character Energy",
+    "xp_reward": 130,
+    "coin_reward": 26,
+    "badge_label": "40M Gift Badge",
+    "title_reward": "",
+    "ordering": 80
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 9,
+  "fields": {
+    "amount_million": "45.00",
+    "name": "Almost There",
+    "xp_reward": 140,
+    "coin_reward": 28,
+    "badge_label": "45M Gift Badge",
+    "title_reward": "",
+    "ordering": 90
+  }
+},
+{
+  "model": "core.giftmilestone",
+  "pk": 10,
+  "fields": {
+    "amount_million": "50.00",
+    "name": "Birthday Mission Complete",
+    "xp_reward": 150,
+    "coin_reward": 30,
+    "badge_label": "50M Gift Badge",
+    "title_reward": "Birthday Mission Complete",
+    "ordering": 100
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 1,
+  "fields": {
+    "name": "☕ Coffee Reward",
+    "description": "یک قهوه بدون حس گناه؛ پاداش کوچک برای ریتم خوب.",
+    "cost": 120,
+    "category": "consumable",
+    "required_level": 1,
+    "allow_repeat": true,
+    "is_active": true,
+    "ordering": 10
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 2,
+  "fields": {
+    "name": "🍔 Favorite Meal",
+    "description": "یک وعده محبوب بعد از اجرای واقعی برنامه.",
+    "cost": 250,
+    "category": "food",
+    "required_level": 1,
+    "allow_repeat": true,
+    "is_active": true,
+    "ordering": 20
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 3,
+  "fields": {
+    "name": "🎬 Chill Night",
+    "description": "یک شب استراحت کنترل‌شده بدون خراب کردن فردا.",
+    "cost": 400,
+    "category": "recovery",
+    "required_level": 2,
+    "allow_repeat": true,
+    "is_active": true,
+    "ordering": 30
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 4,
+  "fields": {
+    "name": "👕 Clothing Item",
+    "description": "یک آیتم پوشاک برای Arc جدید.",
+    "cost": 1200,
+    "category": "style",
+    "required_level": 3,
+    "allow_repeat": false,
+    "is_active": true,
+    "ordering": 40
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 5,
+  "fields": {
+    "name": "👟 Shoes Unlock",
+    "description": "ارتقای جدی ظاهر و حرکت.",
+    "cost": 3000,
+    "category": "style",
+    "required_level": 4,
+    "allow_repeat": false,
+    "is_active": true,
+    "ordering": 50
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 6,
+  "fields": {
+    "name": "🌫️ Perfume Reward",
+    "description": "پاداش هویتی برای حضور بهتر.",
+    "cost": 3500,
+    "category": "style",
+    "required_level": 4,
+    "allow_repeat": false,
+    "is_active": true,
+    "ordering": 60
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 7,
+  "fields": {
+    "name": "🎧 Gadget",
+    "description": "ابزار یا گجت مفید، نه خرید بی‌هدف.",
+    "cost": 5000,
+    "category": "gear",
+    "required_level": 5,
+    "allow_repeat": false,
+    "is_active": true,
+    "ordering": 70
+  }
+},
+{
+  "model": "core.shopitem",
+  "pk": 8,
+  "fields": {
+    "name": "✈️ Experience Reward",
+    "description": "تجربه ارزشمند برای مرحله بعد.",
+    "cost": 8000,
+    "category": "experience",
+    "required_level": 6,
+    "allow_repeat": false,
+    "is_active": true,
+    "ordering": 80
+  }
+},
+{
+  "model": "core.smokinglog",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "date": "2026-05-09",
+    "cigarettes_count": 0,
+    "updated_at": "2026-05-08T23:49:17.915Z"
+  }
+},
+{
+  "model": "core.smokinglog",
+  "pk": 4,
+  "fields": {
+    "user": 3,
+    "date": "2026-05-20",
+    "cigarettes_count": 0,
+    "updated_at": "2026-05-08T23:52:53.868Z"
+  }
+},
+{
+  "model": "core.weeklyrun",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "week_start": "2026-05-04",
+    "week_end": "2026-05-10",
+    "chapter_name": "The Awakening",
+    "generated_at": "2026-05-09T00:19:26.952Z",
+    "is_active": true,
+    "closed_at": null,
+    "created_at": "2026-05-09T00:19:26.953Z"
+  }
+},
+{
+  "model": "core.weeklybosstemplate",
+  "pk": 1,
+  "fields": {
+    "name": "🚀 Launch Beast",
+    "difficulty": "Epic",
+    "description": "بستن کارهای Launch و خروج از حالت تعلیق.",
+    "objectives": [
+      "25h Deep Work",
+      "10 Linear Issues",
+      "7h German",
+      "3 Gym Sessions",
+      "Smoking average under limit"
+    ],
+    "xp_reward": 180,
+    "coin_reward": 45,
+    "attribute_rewards": {
+      "builder": 5,
+      "discipline": 2
+    },
+    "category": "shipping",
+    "is_active": true,
+    "ordering": 10
+  }
+},
+{
+  "model": "core.weeklybosstemplate",
+  "pk": 2,
+  "fields": {
+    "name": "🇩🇪 Sprachjäger",
+    "difficulty": "Rare",
+    "description": "شکار B2 با تمرین‌های سنگین آلمانی.",
+    "objectives": [
+      "7 Speaking Sessions",
+      "5 Immersion Sessions",
+      "0 skipped German days"
+    ],
+    "xp_reward": 140,
+    "coin_reward": 32,
+    "attribute_rewards": {
+      "communication": 4,
+      "intelligence": 3
+    },
+    "category": "german",
+    "is_active": true,
+    "ordering": 20
+  }
+},
+{
+  "model": "core.weeklybosstemplate",
+  "pk": 3,
+  "fields": {
+    "name": "🍖 Mass Builder",
+    "difficulty": "Rare",
+    "description": "کالری، تمرین و استمرار فیزیکی.",
+    "objectives": [
+      "3 Gym Sessions",
+      "10 Calorie Targets",
+      "+0.5kg Weekly Weight"
+    ],
+    "xp_reward": 130,
+    "coin_reward": 30,
+    "attribute_rewards": {
+      "strength": 5,
+      "discipline": 2
+    },
+    "category": "fitness",
+    "is_active": true,
+    "ordering": 30
+  }
+},
+{
+  "model": "core.weeklybosstemplate",
+  "pk": 4,
+  "fields": {
+    "name": "🌙 Night Hunter",
+    "difficulty": "Epic",
+    "description": "شکستن چرخه شب‌زنده‌داری و کنترل نیکوتین.",
+    "objectives": [
+      "No Chain Smoking",
+      "7 Days Under Cigarette Limit",
+      "No Indoor Smoking"
+    ],
+    "xp_reward": 160,
+    "coin_reward": 38,
+    "attribute_rewards": {
+      "discipline": 5
+    },
+    "category": "recovery",
+    "is_active": true,
+    "ordering": 40
+  }
+},
+{
+  "model": "core.weeklybosstemplate",
+  "pk": 5,
+  "fields": {
+    "name": "🐍 Backend Forge",
+    "difficulty": "Epic",
+    "description": "ساختن Backend تمیز و قابل اتکا.",
+    "objectives": [
+      "4h Django Backend",
+      "3 Linear Issues",
+      "1 Clean Commit",
+      "No Scrolling During Sprint"
+    ],
+    "xp_reward": 220,
+    "coin_reward": 60,
+    "attribute_rewards": {
+      "builder": 6,
+      "intelligence": 3
+    },
+    "category": "backend",
+    "is_active": true,
+    "ordering": 50
+  }
+},
+{
+  "model": "core.weeklybossinstance",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "weekly_run": 3,
+    "template": 1,
+    "current_hp": 160,
+    "max_hp": 160,
+    "cleared": false,
+    "created_at": "2026-05-09T00:19:26.961Z"
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 1,
+  "fields": {
+    "title": "🧴 Clean Identity Week",
+    "description": "skincare x2 for 5 days",
+    "category": "hygiene",
+    "xp_reward": 70,
+    "coin_reward": 18,
+    "attribute_rewards": {
+      "charisma": 2
+    },
+    "is_active": true,
+    "ordering": 10
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 2,
+  "fields": {
+    "title": "🪥 Discipline Basics",
+    "description": "brush teeth x2 for 7 days",
+    "category": "hygiene",
+    "xp_reward": 65,
+    "coin_reward": 16,
+    "attribute_rewards": {
+      "discipline": 2
+    },
+    "is_active": true,
+    "ordering": 20
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 3,
+  "fields": {
+    "title": "🐈 Dobby Care Week",
+    "description": "clean Dobby litter daily",
+    "category": "home",
+    "xp_reward": 60,
+    "coin_reward": 14,
+    "attribute_rewards": {
+      "discipline": 2
+    },
+    "is_active": true,
+    "ordering": 30
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 4,
+  "fields": {
+    "title": "🇩🇪 Speaking Pressure",
+    "description": "5 speaking sessions",
+    "category": "german",
+    "xp_reward": 90,
+    "coin_reward": 24,
+    "attribute_rewards": {
+      "communication": 3
+    },
+    "is_active": true,
+    "ordering": 40
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 5,
+  "fields": {
+    "title": "💪 Bulk Protocol",
+    "description": "calorie target 6 days",
+    "category": "fitness",
+    "xp_reward": 90,
+    "coin_reward": 24,
+    "attribute_rewards": {
+      "strength": 3
+    },
+    "is_active": true,
+    "ordering": 50
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 6,
+  "fields": {
+    "title": "🚬 Control Week",
+    "description": "no indoor smoking 5 days",
+    "category": "health",
+    "xp_reward": 85,
+    "coin_reward": 22,
+    "attribute_rewards": {
+      "discipline": 3
+    },
+    "is_active": true,
+    "ordering": 60
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 7,
+  "fields": {
+    "title": "👨‍💻 Builder Sprint",
+    "description": "15h deep work",
+    "category": "work",
+    "xp_reward": 110,
+    "coin_reward": 30,
+    "attribute_rewards": {
+      "builder": 4
+    },
+    "is_active": true,
+    "ordering": 70
+  }
+},
+{
+  "model": "core.weeklychallengetemplate",
+  "pk": 8,
+  "fields": {
+    "title": "😴 Recovery Week",
+    "description": "sleep before 2AM for 5 days",
+    "category": "recovery",
+    "xp_reward": 75,
+    "coin_reward": 20,
+    "attribute_rewards": {
+      "discipline": 2
+    },
+    "is_active": true,
+    "ordering": 80
+  }
+},
+{
+  "model": "core.weeklychallengeinstance",
+  "pk": 5,
+  "fields": {
+    "user": 3,
+    "weekly_run": 3,
+    "template": 7,
+    "completed": false,
+    "completed_at": null
+  }
+},
+{
+  "model": "core.weeklychallengeinstance",
+  "pk": 6,
+  "fields": {
+    "user": 3,
+    "weekly_run": 3,
+    "template": 8,
+    "completed": false,
+    "completed_at": null
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 1,
+  "fields": {
+    "title": "⚡ Locked In State",
+    "description": "ذهن آماده اجرای سنگین است.",
+    "event_type": "buff",
+    "effect_description": "+10% focus discipline for the week",
+    "rarity": "Rare",
+    "is_active": true,
+    "ordering": 10
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 2,
+  "fields": {
+    "title": "🌧️ Low Energy Day",
+    "description": "هفته انرژی پایین دارد؛ تصمیم‌های کوچک مهم‌ترند.",
+    "event_type": "warning",
+    "effect_description": "Keep quests lighter but never zero.",
+    "rarity": "Common",
+    "is_active": true,
+    "ordering": 20
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 3,
+  "fields": {
+    "title": "🧠 Focus Window",
+    "description": "یک بازه طلایی برای Deep Work پیدا می‌شود.",
+    "event_type": "buff",
+    "effect_description": "Prioritize one long sprint.",
+    "rarity": "Rare",
+    "is_active": true,
+    "ordering": 30
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 4,
+  "fields": {
+    "title": "🚬 Nicotine Demon Nearby",
+    "description": "وسوسه نیکوتین نزدیک است.",
+    "event_type": "threat",
+    "effect_description": "Smoking tracker becomes priority.",
+    "rarity": "Epic",
+    "is_active": true,
+    "ordering": 40
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 5,
+  "fields": {
+    "title": "🌌 Alignment Surge",
+    "description": "چند محور زندگی هم‌زمان هماهنگ شده‌اند.",
+    "event_type": "buff",
+    "effect_description": "Perfect Day is worth protecting.",
+    "rarity": "Epic",
+    "is_active": true,
+    "ordering": 50
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 6,
+  "fields": {
+    "title": "💀 Chaos Warning",
+    "description": "هفته مستعد شلوغی و فرار ذهنی است.",
+    "event_type": "warning",
+    "effect_description": "Reduce noise and keep daily anchors.",
+    "rarity": "Rare",
+    "is_active": true,
+    "ordering": 60
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 7,
+  "fields": {
+    "title": "🎁 Rare Loot Drop",
+    "description": "یک فرصت پاداش واقعی باز شده است.",
+    "event_type": "loot",
+    "effect_description": "Shop reward feels cheaper psychologically.",
+    "rarity": "Legendary",
+    "is_active": true,
+    "ordering": 70
+  }
+},
+{
+  "model": "core.randomeventtemplate",
+  "pk": 8,
+  "fields": {
+    "title": "🧘 Recovery Window",
+    "description": "بدن و ذهن درخواست بازسازی دارند.",
+    "event_type": "recovery",
+    "effect_description": "Sleep and recovery quests become priority.",
+    "rarity": "Common",
+    "is_active": true,
+    "ordering": 80
+  }
+},
+{
+  "model": "core.weeklyrandomevent",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "weekly_run": 3,
+    "template": 1,
+    "activated": true,
+    "created_at": "2026-05-09T00:19:26.967Z"
+  }
+},
+{
+  "model": "core.rewardevent",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "source": "quick_action",
+    "source_key": "1",
+    "xp_delta": 50,
+    "coin_delta": 14,
+    "note": "Deploy / Release Task",
+    "week_start": "2026-05-04",
+    "created_at": "2026-05-09T00:28:43.608Z"
+  }
+},
+{
+  "model": "core.rewardevent",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "source": "quick_action",
+    "source_key": "2",
+    "xp_delta": 25,
+    "coin_delta": 6,
+    "note": "No Indoor Smoking",
+    "week_start": "2026-05-04",
+    "created_at": "2026-05-09T00:29:18.868Z"
+  }
+}
+]

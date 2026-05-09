@@ -1,0 +1,35 @@
+<article class="boss-card {% if boss.cleared %}is-cleared{% endif %}">
+    <div class="card-head">
+        <div>
+            <p class="eyebrow">{{ boss.template.difficulty }} · {{ boss.template.category }}</p>
+            <h3>{{ boss.template.name }}</h3>
+        </div>
+        <span class="boss-hp">{{ boss.current_hp }} HP</span>
+    </div>
+    <p>{{ boss.template.description }}</p>
+    {% include "core/partials/progress_bar.html" with label="Boss HP Damage" value=boss.current_hp percent=boss_percent tone="danger" meta=boss.max_hp %}
+    <ul class="objective-list">
+        {% for objective in boss.template.objectives %}
+            <li>{{ objective }}</li>
+        {% endfor %}
+    </ul>
+    <div class="reward-row">
+        <span>Reward: {{ boss.template.xp_reward }} XP</span>
+        <span>{{ boss.template.coin_reward }} Coins</span>
+    </div>
+    {% if boss.cleared %}
+        <button class="secondary-button full" type="button" disabled>Cleared This Week</button>
+    {% else %}
+        <div class="boss-actions">
+            <form method="post" action="{% url 'damage_boss' boss.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="damage" value="20">
+                <button class="primary-button" type="submit">Deal 20 DMG</button>
+            </form>
+            <form method="post" action="{% url 'clear_boss' boss.id %}">
+                {% csrf_token %}
+                <button class="ghost-button" type="submit">Clear</button>
+            </form>
+        </div>
+    {% endif %}
+</article>

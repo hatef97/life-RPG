@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Dashboard | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+    <div>
+        <p class="eyebrow">{{ today_display }}</p>
+        <h2>{{ profile.display_name|default:user.username }}</h2>
+        <p class="hero-copy">{{ profile.title }} · Level {{ profile.level }} · {{ weekly_run.chapter_name }}</p>
+    </div>
+    <div class="hero-state {{ state.tone }}">
+        <span>Current State</span>
+        <strong>{{ state.label }}</strong>
+        <small>{{ state.copy }}</small>
+    </div>
+</section>
+
+<section class="grid stats-grid">
+    {% include "core/partials/stat_card.html" with label="Level" value=profile.level meta=profile.title tone="gold" %}
+    {% include "core/partials/stat_card.html" with label="XP" value=profile.xp meta="Total Experience" tone="violet" %}
+    {% include "core/partials/stat_card.html" with label="Coins" value=profile.coins meta="Merchant Currency" tone="success" %}
+    {% include "core/partials/stat_card.html" with label="Next Level" value=xp_meta.remaining meta="XP remaining" tone="blue" %}
+</section>
+
+<section class="panel">
+    {% include "core/partials/progress_bar.html" with label="XP Progress" value=profile.xp percent=xp_meta.percent tone="gold" meta=profile.title %}
+</section>
+
+<section class="two-column">
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Current Chapter</p>
+                <h2>{{ weekly_run.chapter_name }}</h2>
+            </div>
+            <a class="ghost-button" href="{% url 'weekly_content' %}">Weekly Content</a>
+        </div>
+        <p class="muted">Week: {{ weekly_run.week_start|englishdate }} تا {{ weekly_run.week_end|englishdate }}</p>
+        {% if weekly_boss %}
+            {% include "core/partials/progress_bar.html" with label=weekly_boss.template.name value=weekly_boss.current_hp percent=weekly_boss_percent tone="danger" meta="HP" %}
+        {% endif %}
+        <div class="mini-list">
+            {% for challenge in weekly_challenges %}
+                <span>{{ challenge.template.title }}</span>
+            {% endfor %}
+        </div>
+        {% if weekly_event %}
+            <div class="event-strip">{{ weekly_event.template.title }} · {{ weekly_event.template.effect_description }}</div>
+        {% endif %}
+    </div>
+
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Core Resources</p>
+                <h2>وضعیت امروز</h2>
+            </div>
+        </div>
+        <div class="stack">
+            {% for resource in resources %}
+                {% include "core/partials/progress_bar.html" with label=resource.label value=resource.value percent=resource.percent tone=resource.tone %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="two-column">
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Attributes</p>
+                <h2>ساخت شخصیت</h2>
+            </div>
+        </div>
+        <div class="stack">
+            {% for attribute in attributes %}
+                {% include "core/partials/progress_bar.html" with label=attribute.label value=attribute.value percent=attribute.percent tone=attribute.tone %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Smoking Status</p>
+                <h2>کنترل امروز</h2>
+            </div>
+            <a class="ghost-button" href="{% url 'smoking_tracker' %}">Tracker</a>
+        </div>
+        {% include "core/partials/progress_bar.html" with label="Cigarettes" value=smoking_status.count percent=smoking_status.percent tone="danger" meta=smoking_status.limit %}
+        {% if smoking_status.over_limit %}
+            <div class="danger-banner">Nicotine Demon Nearby</div>
+        {% endif %}
+        <div class="section-head compact">
+            <div>
+                <p class="eyebrow">Gift Fund</p>
+                <h2>{{ gift_fund.current_amount_million }}M / {{ gift_fund.target_amount_million }}M تومان</h2>
+            </div>
+            <a class="ghost-button" href="{% url 'gift_fund' %}">Open</a>
+        </div>
+        {% include "core/partials/progress_bar.html" with label="Birthday Mission" value=gift_fund.current_amount_million percent=gift_percent tone="gold" meta="50M" %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Daily Core Quests</p>
+            <h2>Questهای ثابت امروز</h2>
+        </div>
+        <a class="ghost-button" href="{% url 'daily_quests' %}">All Quests</a>
+    </div>
+    <div class="grid card-grid">
+        {% for row in daily_quest_preview %}
+            {% include "core/partials/quest_card.html" with item=row %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Merchant Preview</p>
+            <h2>Shop Rewards</h2>
+        </div>
+        <a class="ghost-button" href="{% url 'shop' %}">Shop</a>
+    </div>
+    <div class="grid card-grid">
+        {% for row in shop_preview %}
+            {% include "core/partials/shop_card.html" with row=row %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Achievements Preview</p>
+            <h2>نشان‌های فعال</h2>
+        </div>
+    </div>
+    <div class="grid achievement-grid">
+        {% for achievement in achievements %}
+            {% include "core/partials/achievement_card.html" with achievement=achievement %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

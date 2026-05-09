@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{% if mode == "signup" %}Signup{% else %}Login{% endif %} | Hatef Life RPG OS{% endblock %}
+
+{% block content %}
+<section class="auth-screen">
+    <div class="auth-panel">
+        <div class="brand auth-brand">
+            <span class="brand-mark">HL</span>
+            <span>
+                <strong>Hatef Life RPG OS</strong>
+                <small>Rebuild Era</small>
+            </span>
+        </div>
+        <p class="eyebrow">Django Template Edition</p>
+        <h1>{% if mode == "signup" %}ساخت اکانت{% else %}ورود به داشبورد{% endif %}</h1>
+        <form method="post" class="stack-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <label class="field">
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {% if field.errors %}
+                        <small class="form-error">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </label>
+            {% endfor %}
+            {% if form.non_field_errors %}
+                <p class="form-error">{{ form.non_field_errors|striptags }}</p>
+            {% endif %}
+            <button class="primary-button full" type="submit">
+                {% if mode == "signup" %}Create Account{% else %}Enter OS{% endif %}
+            </button>
+        </form>
+        {% if mode == "signup" %}
+            <p class="auth-switch">اکانت داری؟ <a href="{% url 'login' %}">Login</a></p>
+        {% else %}
+            <p class="auth-switch">اولین ورود؟ <a href="{% url 'signup' %}">Signup</a></p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

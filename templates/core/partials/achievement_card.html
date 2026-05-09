@@ -1,0 +1,11 @@
+<article class="achievement-card {% if achievement.unlocked %}is-unlocked{% endif %}">
+    <div class="card-head">
+        <h3>{{ achievement.title }}</h3>
+        {% if achievement.unlocked %}
+            <span class="status success">Unlocked</span>
+        {% else %}
+            <span class="status">Tracking</span>
+        {% endif %}
+    </div>
+    {% include "core/partials/progress_bar.html" with label=achievement.meta value=achievement.percent percent=achievement.percent tone="gold" meta="%" %}
+</article>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Journal | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Journal{% endblock %}
+
+{% block content %}
+<section class="two-column">
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">{{ selected_date|englishdate }}</p>
+                <h2>Mental Check-in</h2>
+            </div>
+        </div>
+        <form method="post" action="{% url 'save_checkin' %}" class="stack-form">
+            {% csrf_token %}
+            {% for field in checkin_form %}
+                <label class="field range-field">
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {% if field.field.widget.input_type == "range" %}
+                        <output>{{ field.value|default:5 }}</output>
+                    {% endif %}
+                    {% if field.errors %}
+                        <small class="form-error">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </label>
+            {% endfor %}
+            <button class="primary-button full" type="submit">Save Check-in</button>
+        </form>
+    </div>
+
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">3-Line Reflection</p>
+                <h2>بازتاب روز</h2>
+            </div>
+        </div>
+        <form method="post" action="{% url 'save_reflection' %}" class="stack-form">
+            {% csrf_token %}
+            {% for field in reflection_form %}
+                <label class="field">
+                    <span>{{ field.label }}</span>
+                    {{ field }}
+                    {% if field.errors %}
+                        <small class="form-error">{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </label>
+            {% endfor %}
+            <button class="primary-button full" type="submit">Save Reflection</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

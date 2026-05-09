@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Smoking Tracker | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Smoking Tracker{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">{{ selected_date|englishdate }} · Daily Limit: {{ limit }}</p>
+            <h2>کنترل نیکوتین</h2>
+        </div>
+        <form method="get" class="date-form">
+            <input class="control-input" type="date" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+            <button class="ghost-button" type="submit">Load</button>
+        </form>
+    </div>
+    {% include "core/partials/progress_bar.html" with label="Cigarettes" value=log.cigarettes_count percent=smoking_percent tone="danger" meta=limit %}
+    {% if over_limit %}
+        <div class="danger-banner">Nicotine Demon Nearby · Limit شکسته شده است.</div>
+    {% endif %}
+    <div class="counter-actions">
+        <form method="post" action="{% url 'adjust_smoking' %}">
+            {% csrf_token %}
+            <input type="hidden" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+            <input type="hidden" name="delta" value="-1">
+            <button class="ghost-button" type="submit">-1</button>
+        </form>
+        <strong class="counter-value">{{ log.cigarettes_count }}</strong>
+        <form method="post" action="{% url 'adjust_smoking' %}">
+            {% csrf_token %}
+            <input type="hidden" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+            <input type="hidden" name="delta" value="1">
+            <button class="primary-button" type="submit">+1</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

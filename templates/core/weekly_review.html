@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Weekly Review | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Weekly Review{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">{{ stats.week_start|englishdate }} تا {{ stats.week_end|englishdate }}</p>
+            <h2>خلاصه هفته جاری</h2>
+        </div>
+        <form method="post" action="{% url 'generate_weekly_archive' %}">
+            {% csrf_token %}
+            <button class="primary-button" type="submit">Generate Summary</button>
+        </form>
+    </div>
+    {% include "core/partials/progress_bar.html" with label="XP Progress" value=profile.xp percent=xp_meta.percent tone="gold" meta=profile.title %}
+</section>
+
+<section class="grid stats-grid">
+    {% include "core/partials/stat_card.html" with label="XP Gained" value=stats.xp_gained meta="This week" tone="gold" %}
+    {% include "core/partials/stat_card.html" with label="Coins Gained" value=stats.coins_gained meta="Net coins" tone="success" %}
+    {% include "core/partials/stat_card.html" with label="Quests" value=stats.daily_quests_completed meta="Completed" tone="success" %}
+    {% include "core/partials/stat_card.html" with label="Perfect Days" value=stats.perfect_days meta="Daily clears" tone="violet" %}
+    {% include "core/partials/stat_card.html" with label="Quick Actions" value=stats.quick_actions_completed meta="Claims" tone="blue" %}
+    {% include "core/partials/stat_card.html" with label="German" value=stats.german_sessions meta="Sessions" tone="blue" %}
+    {% include "core/partials/stat_card.html" with label="Gym" value=stats.gym_sessions meta="Sessions" tone="success" %}
+    {% include "core/partials/stat_card.html" with label="Issues" value=stats.issues_closed meta="Closed" tone="violet" %}
+    {% include "core/partials/stat_card.html" with label="Smoking Limit" value=stats.smoking_limit_days meta="Days" tone="danger" %}
+    {% include "core/partials/stat_card.html" with label="Boss Clears" value=stats.bosses_cleared meta="Weekly" tone="gold" %}
+</section>
+
+<section class="two-column">
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Current Archive</p>
+                <h2>Summary</h2>
+            </div>
+        </div>
+        {% if current_archive %}
+            <p>{{ current_archive.summary }}</p>
+        {% else %}
+            <p class="muted">برای این هفته هنوز Archive ساخته نشده است.</p>
+        {% endif %}
+    </div>
+    <div class="panel">
+        <div class="section-head">
+            <div>
+                <p class="eyebrow">Previous Week</p>
+                <h2>WeeklyStats</h2>
+            </div>
+        </div>
+        {% if previous_stats %}
+            <p>{{ previous_stats.weekly_run.week_start|englishdate }} تا {{ previous_stats.weekly_run.week_end|englishdate }}</p>
+            <p class="muted">{{ previous_stats.xp_gained }} XP · {{ previous_stats.daily_quests_completed }} Quest · {{ previous_stats.bosses_cleared }} Boss Clear</p>
+        {% else %}
+            <p class="muted">Archive قبلی وجود ندارد.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

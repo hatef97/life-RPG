@@ -1,0 +1,70 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#070a13">
+    <title>{% block title %}Hatef Life RPG OS{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+    <div class="shell">
+        {% if user.is_authenticated %}
+            <aside class="sidebar" data-nav-panel>
+                <a class="brand" href="{% url 'dashboard' %}">
+                    <span class="brand-mark">HL</span>
+                    <span>
+                        <strong>Hatef Life RPG OS</strong>
+                        <small>Rebuild Era</small>
+                    </span>
+                </a>
+                <nav class="main-nav" aria-label="ناوبری اصلی">
+                    <a class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
+                    <a class="{% if request.resolver_match.url_name == 'daily_quests' %}active{% endif %}" href="{% url 'daily_quests' %}">Daily Quests</a>
+                    <a class="{% if request.resolver_match.url_name == 'quick_actions' %}active{% endif %}" href="{% url 'quick_actions' %}">Quick Actions</a>
+                    <a class="{% if request.resolver_match.url_name == 'boss_arena' %}active{% endif %}" href="{% url 'boss_arena' %}">Boss Arena</a>
+                    <a class="{% if request.resolver_match.url_name == 'weekly_content' %}active{% endif %}" href="{% url 'weekly_content' %}">Weekly Content</a>
+                    <a class="{% if request.resolver_match.url_name == 'gift_fund' %}active{% endif %}" href="{% url 'gift_fund' %}">Gift Fund</a>
+                    <a class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}" href="{% url 'shop' %}">Shop</a>
+                    <a class="{% if request.resolver_match.url_name == 'smoking_tracker' %}active{% endif %}" href="{% url 'smoking_tracker' %}">Smoking</a>
+                    <a class="{% if request.resolver_match.url_name == 'journal' %}active{% endif %}" href="{% url 'journal' %}">Journal</a>
+                    <a class="{% if request.resolver_match.url_name == 'weekly_review' %}active{% endif %}" href="{% url 'weekly_review' %}">Weekly Review</a>
+                    <a href="{% url 'admin:index' %}">Admin</a>
+                </nav>
+                <form method="post" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button class="ghost-button full" type="submit">خروج</button>
+                </form>
+            </aside>
+        {% endif %}
+
+        <main class="content">
+            {% if user.is_authenticated %}
+                <header class="topbar">
+                    <button class="icon-button nav-toggle" type="button" data-nav-toggle aria-label="باز کردن منو">☰</button>
+                    <div>
+                        <p class="eyebrow">Personal Operating System</p>
+                        <h1>{% block page_title %}Rebuild Era{% endblock %}</h1>
+                    </div>
+                    <div class="topbar-user">{{ user.profile.display_name|default:user.username }}</div>
+                </header>
+            {% endif %}
+
+            {% if messages %}
+                <div class="messages" data-messages>
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">
+                            <span>{{ message }}</span>
+                            <button type="button" data-message-close aria-label="بستن">×</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="{% static 'core/app.js' %}"></script>
+</body>
+</html>

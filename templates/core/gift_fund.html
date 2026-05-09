@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Gift Fund | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Gift Fund{% endblock %}
+
+{% block content %}
+<section class="hero-panel gift-hero">
+    <div>
+        <p class="eyebrow">Birthday Mission</p>
+        <h2>{{ fund.current_amount_million }}M / {{ fund.target_amount_million }}M تومان</h2>
+        <p class="hero-copy">هر ۵ میلیون یک Milestone، Badge و پاداش دائمی باز می‌کند.</p>
+    </div>
+    <div class="hero-state gold">
+        <span>Progress</span>
+        <strong>{{ fund_percent }}%</strong>
+        <small>Target 50M تومان</small>
+    </div>
+</section>
+
+<section class="panel">
+    {% include "core/partials/progress_bar.html" with label="Gift Fund" value=fund.current_amount_million percent=fund_percent tone="gold" meta="Million Toman" %}
+    <form method="post" action="{% url 'adjust_gift_fund' %}" class="inline-form">
+        {% csrf_token %}
+        {{ form.amount }}
+        <button class="primary-button" type="submit" name="operation" value="add">Add</button>
+        <button class="ghost-button" type="submit" name="operation" value="remove">Remove</button>
+    </form>
+</section>
+
+<section class="grid milestone-grid">
+    {% for row in milestone_rows %}
+        {% include "core/partials/milestone_card.html" with item=row %}
+    {% empty %}
+        <div class="empty-state">Milestoneها Seed نشده‌اند.</div>
+    {% endfor %}
+</section>
+{% endblock %}

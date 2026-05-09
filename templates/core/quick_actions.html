@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Quick Actions | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Quick Actions{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Fast Rewards</p>
+            <h2>اکشن‌های سریع</h2>
+        </div>
+    </div>
+    <div class="grid card-grid">
+        {% for action in actions %}
+            <article class="action-card">
+                <div class="card-head">
+                    <div>
+                        <p class="eyebrow">{{ action.get_category_display }}</p>
+                        <h3>{{ action.name }}</h3>
+                    </div>
+                    <span class="reward-pill">+{{ action.xp_reward }} XP</span>
+                </div>
+                <p>{{ action.description }}</p>
+                <div class="reward-row">
+                    <span>{{ action.coin_reward }} Coins</span>
+                    <form method="post" action="{% url 'claim_quick_action' action.id %}">
+                        {% csrf_token %}
+                        <button class="primary-button" type="submit">Claim</button>
+                    </form>
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-state">Quick Action فعالی وجود ندارد.</div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Recent Logs</p>
+            <h2>آخرین Claimها</h2>
+        </div>
+    </div>
+    <div class="timeline">
+        {% for log in logs %}
+            <div class="timeline-row">
+                <span>{{ log.action.name }}</span>
+                <time>{{ log.created_at|englishdatetime }}</time>
+            </div>
+        {% empty %}
+            <p class="muted">هنوز چیزی ثبت نشده است.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

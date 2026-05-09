@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Django
+*.log
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Environment Variables
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Python build files
+build/
+dist/
+*.egg-info/
+
+# Coverage / Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Migrations cache
+*/__pycache__/
+
+# Logs
+logs/
+*.log
+
+# Node (if later used)
+node_modules/
+
+# Temporary files
+*.tmp
+*.bak
+
+# PythonAnywhere
+*.pyc
+
+# Static collected files
+staticfiles/
+
+# Uploaded files
+uploads/
+mediafiles/
+
+# Cache
+.cache/
+
+# mypy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# IDE temp
+*.swp
+*.swo

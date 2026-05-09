@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Boss Arena | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Boss Arena{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">{{ weekly_run.chapter_name }}</p>
+            <h2>نبرد اصلی هفته</h2>
+        </div>
+        <span class="reward-pill">{{ weekly_run.week_start|englishdate }}</span>
+    </div>
+    <p class="muted">Week End: {{ weekly_run.week_end|englishdate }}</p>
+</section>
+
+<section class="grid card-grid single-focus">
+    {% if boss %}
+        {% include "core/partials/boss_card.html" with boss=boss boss_percent=boss_percent %}
+    {% else %}
+        <div class="empty-state">برای این هفته Boss ساخته نشده است. seed_defaults را اجرا کن.</div>
+    {% endif %}
+</section>
+{% endblock %}

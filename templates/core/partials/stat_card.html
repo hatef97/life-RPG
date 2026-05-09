@@ -1,0 +1,7 @@
+<article class="stat-card {{ tone|default:'blue' }}">
+    <span class="stat-label">{{ label }}</span>
+    <strong class="stat-value">{{ value }}</strong>
+    {% if meta %}
+        <small class="stat-meta">{{ meta }}</small>
+    {% endif %}
+</article>

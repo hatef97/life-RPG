@@ -1,0 +1,24 @@
+<article class="shop-card {% if row.unlocked %}is-unlocked{% endif %}">
+    <div class="card-head">
+        <div>
+            <p class="eyebrow">{{ row.item.get_category_display }} · Level {{ row.item.required_level }}</p>
+            <h3>{{ row.item.name }}</h3>
+        </div>
+        <span class="reward-pill">{{ row.item.cost }} Coins</span>
+    </div>
+    <p>{{ row.item.description }}</p>
+    <div class="reward-row">
+        {% if row.unlocked and not row.item.allow_repeat %}
+            <span class="status success">Unlocked</span>
+            <button class="secondary-button" type="button" disabled>Owned</button>
+        {% else %}
+            <span class="status {% if row.can_buy %}success{% endif %}">
+                {% if row.item.allow_repeat %}Repeatable{% elif row.can_buy %}Available{% else %}Locked{% endif %}
+            </span>
+            <form method="post" action="{% url 'purchase_shop_item' row.item.id %}">
+                {% csrf_token %}
+                <button class="primary-button" type="submit" {% if not row.can_buy %}disabled{% endif %}>Buy</button>
+            </form>
+        {% endif %}
+    </div>
+</article>

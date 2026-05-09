@@ -1,0 +1,29 @@
+<article class="quest-card {% if item.completed %}is-complete{% endif %}">
+    <div class="card-head">
+        <div>
+            <p class="eyebrow">{{ item.quest.get_category_display }}</p>
+            <h3>{{ item.quest.name }}</h3>
+        </div>
+        <span class="reward-pill">+{{ item.quest.xp_reward }} XP</span>
+    </div>
+    <p>{{ item.quest.description }}</p>
+    <div class="reward-row">
+        <span>{{ item.quest.coin_reward }} Coins</span>
+        {% if item.completed %}
+            <span class="status success">Complete</span>
+        {% else %}
+            <span class="status">Pending</span>
+        {% endif %}
+    </div>
+    {% if item.completed %}
+        <form method="post" action="{% url 'uncomplete_quest' item.quest.id %}">
+            {% csrf_token %}
+            <button class="secondary-button full" type="submit">برگشت دادن</button>
+        </form>
+    {% else %}
+        <form method="post" action="{% url 'complete_quest' item.quest.id %}">
+            {% csrf_token %}
+            <button class="primary-button full" type="submit">Complete Quest</button>
+        </form>
+    {% endif %}
+</article>

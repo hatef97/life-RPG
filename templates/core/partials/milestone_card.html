@@ -1,0 +1,19 @@
+<article class="milestone-card {% if item.unlocked %}is-unlocked{% elif item.reached %}is-reached{% endif %}">
+    <div class="card-head">
+        <div>
+            <p class="eyebrow">{{ item.milestone.amount_million }}M</p>
+            <h3>{{ item.milestone.name }}</h3>
+        </div>
+        {% if item.unlocked %}
+            <span class="status success">Unlocked</span>
+        {% else %}
+            <span class="status">Locked</span>
+        {% endif %}
+    </div>
+    {% include "core/partials/progress_bar.html" with label="Progress" value=item.percent percent=item.percent tone="violet" meta="%" %}
+    <p class="muted">
+        Reward: {{ item.milestone.xp_reward }} XP / {{ item.milestone.coin_reward }} Coins
+        {% if item.milestone.badge_label %}· Badge: {{ item.milestone.badge_label }}{% endif %}
+        {% if item.milestone.title_reward %}· Title: {{ item.milestone.title_reward }}{% endif %}
+    </p>
+</article>

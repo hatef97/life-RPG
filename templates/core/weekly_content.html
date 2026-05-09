@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Weekly Content | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Weekly Content{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+    <div>
+        <p class="eyebrow">{{ weekly_run.week_start|englishdate }} تا {{ weekly_run.week_end|englishdate }}</p>
+        <h2>{{ weekly_run.chapter_name }}</h2>
+        <p class="hero-copy">محتوای این هفته یک‌بار تولید شده و تا پایان هفته ثابت می‌ماند.</p>
+    </div>
+    {% if random_event %}
+        <div class="hero-state violet">
+            <span>Random Event</span>
+            <strong>{{ random_event.template.title }}</strong>
+            <small>{{ random_event.template.rarity }}</small>
+        </div>
+    {% endif %}
+</section>
+
+<section class="grid card-grid single-focus">
+    {% if boss %}
+        {% include "core/partials/boss_card.html" with boss=boss boss_percent=boss_percent %}
+    {% endif %}
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Side Challenges</p>
+            <h2>چالش‌های هفتگی</h2>
+        </div>
+    </div>
+    <div class="grid card-grid">
+        {% for challenge in challenges %}
+            <article class="challenge-card {% if challenge.completed %}is-complete{% endif %}">
+                <div class="card-head">
+                    <div>
+                        <p class="eyebrow">{{ challenge.template.category }}</p>
+                        <h3>{{ challenge.template.title }}</h3>
+                    </div>
+                    <span class="reward-pill">+{{ challenge.template.xp_reward }} XP</span>
+                </div>
+                <p>{{ challenge.template.description }}</p>
+                <div class="reward-row">
+                    <span>{{ challenge.template.coin_reward }} Coins</span>
+                    {% if challenge.completed %}
+                        <span class="status success">Complete</span>
+                    {% else %}
+                        <form method="post" action="{% url 'complete_weekly_challenge' challenge.id %}">
+                            {% csrf_token %}
+                            <button class="primary-button" type="submit">Complete</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </article>
+        {% empty %}
+            <div class="empty-state">چالش هفتگی فعالی وجود ندارد.</div>
+        {% endfor %}
+    </div>
+</section>
+
+{% if random_event %}
+<section class="panel event-panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">{{ random_event.template.rarity }} · {{ random_event.template.event_type }}</p>
+            <h2>{{ random_event.template.title }}</h2>
+        </div>
+        <span class="status success">Activated</span>
+    </div>
+    <p>{{ random_event.template.description }}</p>
+    <div class="event-strip">{{ random_event.template.effect_description }}</div>
+</section>
+{% endif %}
+{% endblock %}

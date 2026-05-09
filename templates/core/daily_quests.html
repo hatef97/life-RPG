@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Daily Quests | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Daily Quests{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">{{ selected_date|englishdate }}</p>
+            <h2>ماموریت‌های روزانه</h2>
+        </div>
+        <span class="reward-pill">{{ completed_count }}/{{ active_count }} Complete</span>
+    </div>
+    {% include "core/partials/progress_bar.html" with label="Daily Completion" value=completed_count percent=completion_percent tone="success" meta=active_count %}
+    <div class="bonus-row">
+        <form method="post" action="{% url 'claim_daily_bonus' 'combo' %}">
+            {% csrf_token %}
+            <button class="primary-button" type="submit" {% if not combo_unlocked or combo_claimed %}disabled{% endif %}>
+                Combo +30 XP
+            </button>
+        </form>
+        <form method="post" action="{% url 'claim_daily_bonus' 'perfect_day' %}">
+            {% csrf_token %}
+            <button class="primary-button gold" type="submit" {% if not perfect_unlocked or perfect_claimed %}disabled{% endif %}>
+                Perfect Day +100 XP
+            </button>
+        </form>
+        <span class="status {% if perfect_unlocked %}success{% endif %}">
+            {% if perfect_unlocked %}Perfect Day Ready{% else %}Perfect Day Pending{% endif %}
+        </span>
+    </div>
+</section>
+
+<section class="grid card-grid">
+    {% for row in quest_rows %}
+        {% include "core/partials/quest_card.html" with item=row %}
+    {% empty %}
+        <div class="empty-state">هنوز Quest فعالی وجود ندارد. اول `seed_defaults` را اجرا کن.</div>
+    {% endfor %}
+</section>
+{% endblock %}

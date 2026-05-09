@@ -1,0 +1,12 @@
+<div class="progress-block {{ tone|default:'blue' }}">
+    <div class="progress-head">
+        <span>{{ label }}</span>
+        <strong>{{ value }}</strong>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+        <span class="progress-fill" style="width: {{ percent }}%"></span>
+    </div>
+    {% if meta %}
+        <p class="progress-meta">{{ meta }}</p>
+    {% endif %}
+</div>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load date_extras %}
+
+{% block title %}Shop | Hatef Life RPG OS{% endblock %}
+{% block page_title %}Merchant Shop{% endblock %}
+
+{% block content %}
+<section class="hero-panel shop-hero">
+    <div>
+        <p class="eyebrow">RPG Merchant</p>
+        <h2>Reward Shop</h2>
+        <p class="hero-copy">Coins را برای Rewardهای واقعی خرج کن. آیتم‌های غیرتکراری فقط یک‌بار Unlock می‌شوند.</p>
+    </div>
+    <div class="hero-state gold">
+        <span>Your Coins</span>
+        <strong>{{ user.profile.coins }}</strong>
+        <small>Spend wisely</small>
+    </div>
+</section>
+
+<section class="grid card-grid">
+    {% for row in shop_rows %}
+        {% include "core/partials/shop_card.html" with row=row %}
+    {% empty %}
+        <div class="empty-state">Shop Item فعالی وجود ندارد.</div>
+    {% endfor %}
+</section>
+
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Unlocked Rewards</p>
+            <h2>خریدهای اخیر</h2>
+        </div>
+    </div>
+    <div class="timeline">
+        {% for purchase in purchases %}
+            <div class="timeline-row">
+                <span>{{ purchase.item.name }}</span>
+                <time>{{ purchase.purchased_at|englishdatetime }}</time>
+            </div>
+        {% empty %}
+            <p class="muted">هنوز Rewardی Unlock نشده است.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

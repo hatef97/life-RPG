@@ -13,24 +13,6 @@
   }
 },
 {
-  "model": "auth.user",
-  "pk": 3,
-  "fields": {
-    "password": "pbkdf2_sha256$1000000$q4SGZlJ0aiDzKXNRZLMn8o$g0OhunpB/TschmWUB0xV0rOiAUcjIXOCBl+0JrEJMwc=",
-    "last_login": "2026-05-09T00:40:49.024Z",
-    "is_superuser": true,
-    "username": "hatef",
-    "first_name": "",
-    "last_name": "",
-    "email": "hatef@gmail.com",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2026-05-08T23:45:35.967Z",
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
   "model": "sessions.session",
   "pk": "d49tnmw7jl4208764qm52c3seevk8jzv",
   "fields": {

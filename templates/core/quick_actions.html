@@ -5,7 +5,7 @@
 {% block page_title %}Quick Actions{% endblock %}
 
 {% block content %}
-<section class="section">
+<section>
     <div class="section-head">
         <div>
             <p class="eyebrow">Fast Rewards</p>
@@ -25,11 +25,11 @@
                 <p>{{ action.description }}</p>
                 <div class="reward-row">
                     <span>{{ action.coin_reward }} Coins</span>
-                    <form method="post" action="{% url 'claim_quick_action' action.id %}">
-                        {% csrf_token %}
-                        <button class="primary-button" type="submit">Claim</button>
-                    </form>
                 </div>
+                <form method="post" action="{% url 'claim_quick_action' action.id %}">
+                    {% csrf_token %}
+                    <button class="primary-button full" type="submit">Claim</button>
+                </form>
             </article>
         {% empty %}
             <div class="empty-state">Quick Action فعالی وجود ندارد.</div>

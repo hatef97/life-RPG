@@ -261,6 +261,7 @@ class SmokingLog(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="smoking_logs")
     date = models.DateField()
     cigarettes_count = models.PositiveSmallIntegerField(default=0)
+    daily_limit = models.PositiveSmallIntegerField(default=10)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -368,6 +369,7 @@ class WeeklyBossTemplate(models.Model):
     difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES, default="Rare")
     description = models.TextField(blank=True)
     objectives = models.JSONField(default=list, blank=True)
+    category_damage_map = models.JSONField(default=dict, blank=True)
     xp_reward = models.PositiveIntegerField(default=120)
     coin_reward = models.PositiveIntegerField(default=30)
     attribute_rewards = models.JSONField(default=dict, blank=True)
@@ -396,6 +398,21 @@ class WeeklyBossInstance(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.template} - {self.weekly_run.week_start}"
+
+
+class BossDamageLog(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="boss_damage_logs")
+    boss_instance = models.ForeignKey(WeeklyBossInstance, on_delete=models.CASCADE, related_name="damage_logs")
+    damage = models.PositiveIntegerField()
+    source = models.CharField(max_length=60)
+    source_name = models.CharField(max_length=200, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.user} -{self.damage} HP via {self.source}"
 
 
 class WeeklyChallengeTemplate(models.Model):

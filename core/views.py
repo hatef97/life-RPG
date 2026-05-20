@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from .forms import GiftAmountForm, LoginForm, MentalCheckInForm, ReflectionForm, SignupForm
 from .models import (
     BonusClaim,
+    BossDamageLog,
     DailyQuest,
     MentalCheckIn,
     QuestCompletion,
@@ -23,6 +24,7 @@ from .selectors import dashboard_context, gift_milestone_rows, profile_resources
 from .services import (
     adjust_gift_fund,
     adjust_smoking,
+    apply_boss_auto_damage,
     claim_daily_bonus,
     claim_quick_action,
     clear_boss,
@@ -35,6 +37,7 @@ from .services import (
     generate_weekly_archive,
     get_gift_fund,
     get_or_create_current_week,
+    get_or_create_smoking_log,
     percent,
     purchase_shop_item,
     save_checkin,
@@ -142,7 +145,10 @@ def daily_quests(request):
 @login_required
 @require_POST
 def complete_quest_view(request, quest_id):
-    flash_result(request, complete_daily_quest(request.user, quest_id))
+    result = complete_daily_quest(request.user, quest_id)
+    flash_result(request, result)
+    if result.ok:
+        apply_boss_auto_damage(request.user, "quest", quest_id=quest_id)
     return redirect("daily_quests")
 
 
@@ -170,7 +176,10 @@ def quick_actions(request):
 @login_required
 @require_POST
 def claim_quick_action_view(request, action_id):
-    flash_result(request, claim_quick_action(request.user, action_id))
+    result = claim_quick_action(request.user, action_id)
+    flash_result(request, result)
+    if result.ok:
+        apply_boss_auto_damage(request.user, "quick_action", action_id=action_id)
     return redirect("quick_actions")
 
 
@@ -182,6 +191,11 @@ def boss_arena(request):
     if boss:
         context["boss_percent"] = percent(boss.max_hp - boss.current_hp, boss.max_hp)
         context["remaining"] = boss.current_hp
+        context["damage_logs"] = BossDamageLog.objects.filter(boss_instance=boss)[:20]
+        damage_map = boss.template.category_damage_map or {}
+        context["damage_triggers"] = [
+            {"category": cat, "damage": dmg} for cat, dmg in damage_map.items()
+        ]
     return render(request, "core/boss_arena.html", context)
 
 
@@ -266,14 +280,14 @@ def purchase_shop_item_view(request, item_id):
 @login_required
 def smoking_tracker(request):
     selected_date = parse_date(request.GET.get("date"))
-    log, _ = SmokingLog.objects.get_or_create(user=request.user, date=selected_date)
+    log = get_or_create_smoking_log(request.user, selected_date)
     context = {
         "selected_date": selected_date,
         "selected_date_display": english_date(selected_date),
         "log": log,
-        "limit": 15,
-        "over_limit": log.cigarettes_count > 15,
-        "smoking_percent": min(140, percent(log.cigarettes_count, 15)),
+        "limit": log.daily_limit,
+        "over_limit": log.cigarettes_count > log.daily_limit,
+        "smoking_percent": min(140, percent(log.cigarettes_count, log.daily_limit)),
     }
     return render(request, "core/smoking_tracker.html", context)
 
@@ -284,7 +298,7 @@ def adjust_smoking_view(request):
     selected_date = parse_date(request.POST.get("date"))
     delta = int(request.POST.get("delta", 0))
     log = adjust_smoking(request.user, selected_date, delta)
-    if log.cigarettes_count > 15:
+    if log.cigarettes_count > log.daily_limit:
         messages.error(request, "Limit رد شد. Nicotine Demon Nearby.")
     else:
         messages.success(request, "Smoking log به‌روز شد.")

@@ -33,4 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
         input.addEventListener("input", sync);
         sync();
     });
+
+    // Gift fund: comma-format on blur, strip commas on focus
+    document.querySelectorAll(".gift-amount-input").forEach((input) => {
+        const fmt = (v) => v.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        const strip = (v) => v.replace(/,/g, "");
+        input.addEventListener("blur", () => {
+            const raw = strip(input.value).trim();
+            if (raw && /^\d+(\.\d+)?$/.test(raw)) input.value = fmt(raw);
+        });
+        input.addEventListener("focus", () => {
+            input.value = strip(input.value);
+        });
+    });
 });

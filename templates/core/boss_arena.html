@@ -23,4 +23,46 @@
         <div class="empty-state">برای این هفته Boss ساخته نشده است. seed_defaults را اجرا کن.</div>
     {% endif %}
 </section>
+
+{% if damage_triggers %}
+<section class="panel section">
+    <div class="section-head compact">
+        <div>
+            <p class="eyebrow">Weakness Map</p>
+            <h2>Auto-Damage Triggers</h2>
+        </div>
+    </div>
+    <p class="muted" style="margin:0 0 12px;font-size:.85rem;">هر بار که Quest یا Action در این دسته‌ها کامل شود، Boss این مقدار HP از دست می‌دهد.</p>
+    <div class="boss-triggers">
+        {% for t in damage_triggers %}
+        <div class="trigger-pill">
+            <span class="trigger-category">{{ t.category }}</span>
+            <span class="trigger-damage">-{{ t.damage }} HP</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if damage_logs %}
+<section class="panel section">
+    <div class="section-head compact">
+        <div>
+            <p class="eyebrow">This Week</p>
+            <h2>Damage Feed</h2>
+        </div>
+    </div>
+    <div class="damage-feed">
+        {% for entry in damage_logs %}
+        <div class="damage-feed-row">
+            <div class="damage-badge">-{{ entry.damage }} HP</div>
+            <div class="damage-feed-info">
+                <span>{{ entry.source_name|default:entry.source }}</span>
+                <small>{{ entry.source }} · {{ entry.created_at|englishdatetime }}</small>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 {% endblock %}

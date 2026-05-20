@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import (
     BonusClaim,
     Boss,
+    BossDamageLog,
     BossProgress,
     DailyQuest,
     GiftFund,
@@ -116,9 +117,16 @@ class PurchaseAdmin(admin.ModelAdmin):
 
 @admin.register(SmokingLog)
 class SmokingLogAdmin(admin.ModelAdmin):
-    list_display = ("user", "date", "cigarettes_count", "updated_at")
+    list_display = ("user", "date", "cigarettes_count", "daily_limit", "updated_at")
     list_filter = ("date",)
     search_fields = ("user__username",)
+
+
+@admin.register(BossDamageLog)
+class BossDamageLogAdmin(admin.ModelAdmin):
+    list_display = ("user", "boss_instance", "damage", "source", "source_name", "created_at")
+    list_filter = ("source", "created_at")
+    search_fields = ("user__username", "source_name")
 
 
 @admin.register(MentalCheckIn)

@@ -1002,6 +1002,183 @@ body.nav-open .nav-overlay { display: block; }
     .hero-state { min-width: 0; }
 }
 
+/* ─── Sidebar user section (logout footer) ──────────────────────────────── */
+
+.sidebar-user-section {
+    margin-top: auto;
+    padding-top: 14px;
+    flex-shrink: 0;
+    border-top: 1px solid var(--line);
+}
+
+.sidebar-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    direction: ltr;
+}
+
+.sidebar-avatar {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(240, 193, 90, 0.38);
+    background: linear-gradient(145deg, rgba(240, 193, 90, 0.18), rgba(85, 170, 255, 0.08));
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+}
+
+.sidebar-user-meta {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.sidebar-user-meta strong {
+    display: block;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-user-meta small {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-signout-button {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: 100%;
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    background: transparent;
+    font-size: 0.82rem;
+    font-weight: 500;
+    direction: ltr;
+    transition: var(--transition);
+}
+
+.sidebar-signout-button:hover {
+    color: var(--danger);
+    border-color: rgba(255, 93, 103, 0.35);
+    background: rgba(255, 93, 103, 0.06);
+}
+
+.sidebar-signout-button svg { flex-shrink: 0; }
+
+/* ─── Boss damage feed ───────────────────────────────────────────────────── */
+
+.damage-feed { display: grid; gap: 6px; }
+
+.damage-feed-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.02);
+    transition: background var(--transition);
+}
+
+.damage-feed-row:hover { background: rgba(255, 255, 255, 0.04); }
+
+.damage-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.73rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--danger);
+    background: var(--danger-dim);
+    border: 1px solid rgba(255, 93, 103, 0.28);
+    flex-shrink: 0;
+    direction: ltr;
+}
+
+.damage-feed-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    font-size: 0.875rem;
+}
+
+.damage-feed-info small {
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+/* ─── Boss trigger pills ─────────────────────────────────────────────────── */
+
+.boss-triggers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.trigger-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 0.8rem;
+    direction: ltr;
+}
+
+.trigger-category {
+    color: var(--text);
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.trigger-damage {
+    color: var(--danger);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+/* ─── Daily limit info (smoking tracker) ────────────────────────────────── */
+
+.daily-limit-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 14px;
+    border: 1px solid rgba(240, 193, 90, 0.22);
+    border-radius: var(--radius-sm);
+    background: rgba(240, 193, 90, 0.05);
+    direction: ltr;
+    font-size: 0.84rem;
+}
+
+.daily-limit-info span { color: var(--muted); }
+.daily-limit-info strong { color: var(--gold); font-size: 1.1rem; font-weight: 700; }
+.daily-limit-info small { color: var(--muted); font-size: 0.75rem; }
+
 /* ─── Responsive: 640px (small phones) ──────────────────────────────────── */
 
 @media (max-width: 640px) {

@@ -53,7 +53,7 @@ def current_state(user, selected_date=None):
     active_count = DailyQuest.objects.filter(is_active=True).count()
     smoking = SmokingLog.objects.filter(user=user, date=selected_date).first()
 
-    if smoking and smoking.cigarettes_count > 15:
+    if smoking and smoking.cigarettes_count > smoking.daily_limit:
         return {"label": "Nicotine Demon Nearby", "tone": "danger", "copy": "Limit شکسته شده؛ امروز باید کنترل برگردد."}
     if active_count and completed == active_count:
         return {"label": "Alignment", "tone": "success", "copy": "همه محورهای روز روی ریل هستند."}
@@ -124,11 +124,12 @@ def shop_item_rows(user, limit=None):
 def smoking_status(user):
     log = SmokingLog.objects.filter(user=user, date=today()).first()
     count = log.cigarettes_count if log else 0
+    limit = log.daily_limit if log else 10
     return {
         "count": count,
-        "limit": 15,
-        "over_limit": count > 15,
-        "percent": min(140, percent(count, 15)),
+        "limit": limit,
+        "over_limit": count > limit,
+        "percent": min(140, percent(count, limit)),
     }
 
 

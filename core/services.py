@@ -7,12 +7,13 @@ from decimal import Decimal, InvalidOperation
 
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.db.models import Q, Sum
+from django.db.models import F, Q, Sum
 from django.utils import timezone
 
 from .models import (
     BonusClaim,
     Boss,
+    BossDamageLog,
     BossProgress,
     DailyQuest,
     GiftFund,
@@ -100,7 +101,8 @@ def today() -> date:
 
 def get_current_week_range(current_day: date | None = None) -> tuple[date, date]:
     current_day = current_day or today()
-    week_start = current_day - timedelta(days=current_day.weekday())
+    days_since_saturday = (current_day.weekday() - 5) % 7
+    week_start = current_day - timedelta(days=days_since_saturday)
     return week_start, week_start + timedelta(days=6)
 
 
@@ -316,7 +318,7 @@ def compute_weekly_stats(user, week_start: date | None = None) -> dict:
         "smoking_limit_days": SmokingLog.objects.filter(
             user=user,
             date__range=(week_start, week_end),
-            cigarettes_count__lte=15,
+            cigarettes_count__lte=F("daily_limit"),
         ).count(),
         "bosses_cleared": WeeklyBossInstance.objects.filter(
             user=user,
@@ -619,12 +621,99 @@ def purchase_shop_item(user, item_id: int) -> OperationResult:
     return OperationResult(True, f"{item.name} از Merchant Shop Unlock شد.")
 
 
+def get_or_create_smoking_log(user, selected_date: date) -> SmokingLog:
+    log, _ = SmokingLog.objects.get_or_create(
+        user=user,
+        date=selected_date,
+        defaults={"daily_limit": random.randint(1, 10)},
+    )
+    return log
+
+
 @transaction.atomic
 def adjust_smoking(user, selected_date: date, delta: int) -> SmokingLog:
-    log = SmokingLog.objects.select_for_update().get_or_create(user=user, date=selected_date)[0]
+    log = SmokingLog.objects.select_for_update().get_or_create(
+        user=user,
+        date=selected_date,
+        defaults={"daily_limit": random.randint(1, 10)},
+    )[0]
     log.cigarettes_count = max(0, log.cigarettes_count + int(delta))
     log.save(update_fields=["cigarettes_count", "updated_at"])
     return log
+
+
+def apply_boss_auto_damage(
+    user,
+    source: str,
+    quest_id: int | None = None,
+    action_id: int | None = None,
+) -> int:
+    try:
+        weekly_run = WeeklyRun.objects.filter(user=user, is_active=True).first()
+        if not weekly_run:
+            return 0
+        instance = (
+            WeeklyBossInstance.objects.filter(user=user, weekly_run=weekly_run, cleared=False)
+            .select_related("template")
+            .first()
+        )
+        if not instance or not instance.template.category_damage_map:
+            return 0
+
+        category = None
+        source_name = ""
+        if source == "quest" and quest_id:
+            quest = DailyQuest.objects.filter(pk=quest_id).first()
+            if quest:
+                category = quest.category
+                source_name = quest.name
+        elif source == "quick_action" and action_id:
+            action = QuickAction.objects.filter(pk=action_id).first()
+            if action:
+                category = action.category
+                source_name = action.name
+
+        if not category:
+            return 0
+        damage = int(instance.template.category_damage_map.get(category, 0))
+        if damage <= 0:
+            return 0
+
+        with transaction.atomic():
+            locked = (
+                WeeklyBossInstance.objects.select_for_update()
+                .select_related("template", "weekly_run")
+                .get(pk=instance.pk)
+            )
+            if locked.cleared:
+                return 0
+            locked.current_hp = max(0, locked.current_hp - damage)
+            cleared_now = locked.current_hp == 0
+            if cleared_now:
+                locked.cleared = True
+            locked.save(update_fields=["current_hp", "cleared"])
+            BossDamageLog.objects.create(
+                user=user,
+                boss_instance=locked,
+                damage=damage,
+                source=source,
+                source_name=source_name,
+            )
+            if cleared_now:
+                tmpl = locked.template
+                award_reward(
+                    user,
+                    xp=tmpl.xp_reward,
+                    coins=tmpl.coin_reward,
+                    attribute_rewards=tmpl.attribute_rewards,
+                    source="weekly_boss_clear",
+                    source_key=f"{locked.pk}:{locked.weekly_run.week_start.isoformat()}",
+                    note=tmpl.name,
+                    event_date=locked.weekly_run.week_start,
+                )
+        return damage
+    except Exception:
+        return 0
 
 
 def save_checkin(user, form) -> MentalCheckIn:

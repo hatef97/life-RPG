@@ -8,7 +8,7 @@
 <section class="panel">
     <div class="section-head">
         <div>
-            <p class="eyebrow">{{ selected_date|englishdate }} · Daily Limit: {{ limit }}</p>
+            <p class="eyebrow">{{ selected_date|englishdate }}</p>
             <h2>کنترل نیکوتین</h2>
         </div>
         <form method="get" class="date-form">
@@ -16,10 +16,19 @@
             <button class="ghost-button" type="submit">Load</button>
         </form>
     </div>
+
+    <div class="daily-limit-info">
+        <span>Daily Limit</span>
+        <strong>{{ log.daily_limit }}</strong>
+        <small>auto-generated</small>
+    </div>
+
     {% include "core/partials/progress_bar.html" with label="Cigarettes" value=log.cigarettes_count percent=smoking_percent tone="danger" meta=limit %}
+
     {% if over_limit %}
         <div class="danger-banner">Nicotine Demon Nearby · Limit شکسته شده است.</div>
     {% endif %}
+
     <div class="counter-actions">
         <form method="post" action="{% url 'adjust_smoking' %}">
             {% csrf_token %}

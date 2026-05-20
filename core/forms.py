@@ -1,3 +1,5 @@
+from decimal import Decimal, InvalidOperation
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
@@ -20,13 +22,27 @@ class LoginForm(AuthenticationForm):
 
 
 class GiftAmountForm(forms.Form):
-    amount = forms.DecimalField(
-        label="مبلغ به میلیون",
-        min_value=0.01,
-        max_digits=8,
-        decimal_places=2,
-        widget=forms.NumberInput(attrs={"step": "0.25", "class": "control-input"}),
+    amount = forms.CharField(
+        label="مبلغ (تومان)",
+        widget=forms.TextInput(attrs={
+            "class": "control-input gift-amount-input",
+            "placeholder": "مثال: 5,000,000",
+            "inputmode": "numeric",
+            "autocomplete": "off",
+            "dir": "ltr",
+        }),
     )
+
+    def clean_amount(self):
+        raw = self.cleaned_data.get("amount", "")
+        cleaned = raw.replace(",", "").strip()
+        try:
+            value = Decimal(cleaned)
+        except (InvalidOperation, ValueError):
+            raise forms.ValidationError("مبلغ وارد شده معتبر نیست.")
+        if value <= 0:
+            raise forms.ValidationError("مبلغ باید بیشتر از صفر باشد.")
+        return value / Decimal("1000000")
 
 
 class MentalCheckInForm(forms.ModelForm):

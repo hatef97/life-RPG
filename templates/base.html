@@ -4,11 +4,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#070a13">
+    <meta name="theme-color" content="#060910">
     <title>{% block title %}Hatef Life RPG OS{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
+    {% if user.is_authenticated %}
+        <!-- Mobile nav overlay (click to close sidebar) -->
+        <div class="nav-overlay" data-nav-overlay></div>
+    {% endif %}
+
     <div class="shell">
         {% if user.is_authenticated %}
             <aside class="sidebar" data-nav-panel>
@@ -19,19 +24,91 @@
                         <small>Rebuild Era</small>
                     </span>
                 </a>
+
                 <nav class="main-nav" aria-label="ناوبری اصلی">
-                    <a class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">Dashboard</a>
-                    <a class="{% if request.resolver_match.url_name == 'daily_quests' %}active{% endif %}" href="{% url 'daily_quests' %}">Daily Quests</a>
-                    <a class="{% if request.resolver_match.url_name == 'quick_actions' %}active{% endif %}" href="{% url 'quick_actions' %}">Quick Actions</a>
-                    <a class="{% if request.resolver_match.url_name == 'boss_arena' %}active{% endif %}" href="{% url 'boss_arena' %}">Boss Arena</a>
-                    <a class="{% if request.resolver_match.url_name == 'weekly_content' %}active{% endif %}" href="{% url 'weekly_content' %}">Weekly Content</a>
-                    <a class="{% if request.resolver_match.url_name == 'gift_fund' %}active{% endif %}" href="{% url 'gift_fund' %}">Gift Fund</a>
-                    <a class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}" href="{% url 'shop' %}">Shop</a>
-                    <a class="{% if request.resolver_match.url_name == 'smoking_tracker' %}active{% endif %}" href="{% url 'smoking_tracker' %}">Smoking</a>
-                    <a class="{% if request.resolver_match.url_name == 'journal' %}active{% endif %}" href="{% url 'journal' %}">Journal</a>
-                    <a class="{% if request.resolver_match.url_name == 'weekly_review' %}active{% endif %}" href="{% url 'weekly_review' %}">Weekly Review</a>
-                    <a href="{% url 'admin:index' %}">Admin</a>
+
+                    <a class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                        </svg>
+                        Dashboard
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'daily_quests' %}active{% endif %}" href="{% url 'daily_quests' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+                        </svg>
+                        Daily Quests
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'quick_actions' %}active{% endif %}" href="{% url 'quick_actions' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                        Quick Actions
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'boss_arena' %}active{% endif %}" href="{% url 'boss_arena' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                        Boss Arena
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'weekly_content' %}active{% endif %}" href="{% url 'weekly_content' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Weekly Content
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'gift_fund' %}active{% endif %}" href="{% url 'gift_fund' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                        </svg>
+                        Gift Fund
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}" href="{% url 'shop' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                        </svg>
+                        Shop
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'smoking_tracker' %}active{% endif %}" href="{% url 'smoking_tracker' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="16" x2="22" y2="16"/><line x1="18" y1="4" x2="18" y2="12"/>
+                            <path d="M14 4c0 4 4 4 4 8"/>
+                        </svg>
+                        Smoking
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'journal' %}active{% endif %}" href="{% url 'journal' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        Journal
+                    </a>
+
+                    <a class="{% if request.resolver_match.url_name == 'weekly_review' %}active{% endif %}" href="{% url 'weekly_review' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                        Weekly Review
+                    </a>
+
+                    <a href="{% url 'admin:index' %}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07"/>
+                            <path d="M12 2v2m0 16v2M2 12h2m16 0h2"/>
+                        </svg>
+                        Admin
+                    </a>
                 </nav>
+
                 <form method="post" action="{% url 'logout' %}" class="logout-form">
                     {% csrf_token %}
                     <button class="ghost-button full" type="submit">خروج</button>
@@ -42,7 +119,13 @@
         <main class="content">
             {% if user.is_authenticated %}
                 <header class="topbar">
-                    <button class="icon-button nav-toggle" type="button" data-nav-toggle aria-label="باز کردن منو">☰</button>
+                    <button class="icon-button nav-toggle" type="button" data-nav-toggle aria-label="باز کردن منو">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <line x1="4" y1="7" x2="20" y2="7"/>
+                            <line x1="4" y1="12" x2="20" y2="12"/>
+                            <line x1="4" y1="17" x2="20" y2="17"/>
+                        </svg>
+                    </button>
                     <div>
                         <p class="eyebrow">Personal Operating System</p>
                         <h1>{% block page_title %}Rebuild Era{% endblock %}</h1>
@@ -65,6 +148,52 @@
             {% block content %}{% endblock %}
         </main>
     </div>
+
+    {% if user.is_authenticated %}
+        <!-- Bottom navigation (mobile only) -->
+        <nav class="bottom-nav" aria-label="Mobile Navigation">
+
+            <a class="bottom-nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                <span>Home</span>
+            </a>
+
+            <a class="bottom-nav-item {% if request.resolver_match.url_name == 'daily_quests' %}active{% endif %}" href="{% url 'daily_quests' %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+                </svg>
+                <span>Quests</span>
+            </a>
+
+            <a class="bottom-nav-item {% if request.resolver_match.url_name == 'quick_actions' %}active{% endif %}" href="{% url 'quick_actions' %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                <span>Actions</span>
+            </a>
+
+            <a class="bottom-nav-item {% if request.resolver_match.url_name == 'journal' %}active{% endif %}" href="{% url 'journal' %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>Journal</span>
+            </a>
+
+            <button class="bottom-nav-item" type="button" data-nav-toggle aria-label="منوی بیشتر">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+                <span>More</span>
+            </button>
+
+        </nav>
+    {% endif %}
+
     <script src="{% static 'core/app.js' %}"></script>
 </body>
 </html>

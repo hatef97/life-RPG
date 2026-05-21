@@ -573,13 +573,13 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
     background: var(--success-dim);
 }
 
-/* ─── Boss HP ────────────────────────────────────────────────────────────── */
+/* ─── Boss percent badge ─────────────────────────────────────────────────── */
 
-.boss-hp {
-    color: var(--danger);
+.boss-percent-label {
+    font-size: 1.1rem;
     font-weight: 700;
+    color: var(--gold);
     direction: ltr;
-    font-size: 1.05rem;
 }
 
 /* ─── Buttons ────────────────────────────────────────────────────────────── */
@@ -657,28 +657,242 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
 .inline-form,
 .counter-actions { flex-wrap: wrap; margin-top: 14px; }
 
-/* ─── Boss actions ───────────────────────────────────────────────────────── */
+/* ─── Boss card ──────────────────────────────────────────────────────────── */
 
-.boss-actions { justify-content: stretch; }
-.boss-actions form   { flex: 1; }
-.boss-actions button { width: 100%; }
+.boss-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.boss-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.boss-difficulty-badge {
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.boss-difficulty-common  { background: rgba(138, 150, 180, 0.18); color: #8a96b4; border: 1px solid rgba(138,150,180,0.28); }
+.boss-difficulty-rare    { background: var(--blue-dim);   color: var(--blue);    border: 1px solid rgba(85,170,255,0.28); }
+.boss-difficulty-epic    { background: var(--violet-dim); color: var(--violet);  border: 1px solid rgba(155,123,255,0.28); }
+.boss-difficulty-legendary { background: var(--gold-dim); color: var(--gold);    border: 1px solid rgba(240,193,90,0.28); }
+
+.boss-card-category {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: capitalize;
+}
+
+.boss-card-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.3;
+}
+
+.boss-card-desc {
+    color: var(--muted);
+    font-size: 0.875rem;
+    margin-bottom: 14px;
+    line-height: 1.55;
+}
+
+/* Overall progress track */
+.boss-progress-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+.boss-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3461ff, #8a5aff, var(--gold));
+    border-radius: var(--radius-full);
+    transition: width 400ms var(--ease);
+    min-width: 3px;
+}
+
+/* Objectives checklist */
+.boss-objectives {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: grid;
+    gap: 8px;
+}
+
+.boss-objective {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.025);
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.boss-objective.is-done {
+    border-color: rgba(79, 209, 139, 0.35);
+    background: rgba(79, 209, 139, 0.06);
+}
+
+.boss-obj-check {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-xs);
+    border: 1.5px solid var(--line-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--success);
+    background: transparent;
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.boss-objective.is-done .boss-obj-check {
+    border-color: var(--success);
+    background: var(--success-dim);
+}
+
+.boss-obj-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.boss-obj-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.boss-objective.is-done .boss-obj-label {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255, 255, 255, 0.2);
+}
+
+.boss-obj-track {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.boss-obj-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3461ff, #8a5aff);
+    border-radius: var(--radius-full);
+    transition: width 300ms var(--ease);
+    min-width: 3px;
+}
+
+.boss-objective.is-done .boss-obj-fill {
+    background: var(--success);
+}
+
+.boss-obj-count {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    direction: ltr;
+    flex-shrink: 0;
+}
+
+.boss-objective.is-done .boss-obj-count { color: var(--success); }
+
+.boss-obj-tick {
+    padding: 3px 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-xs);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.boss-obj-tick:hover {
+    background: rgba(85, 170, 255, 0.12);
+    border-color: rgba(85, 170, 255, 0.4);
+    color: var(--blue);
+}
+
+/* Footer */
+.boss-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.boss-reward-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.boss-reward-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--violet-dim);
+    color: var(--violet);
+    border: 1px solid rgba(155, 123, 255, 0.28);
+    direction: ltr;
+}
+
+.boss-reward-pill.boss-reward-coin {
+    background: var(--gold-dim);
+    color: var(--gold);
+    border-color: rgba(240, 193, 90, 0.28);
+}
+
+.boss-cleared-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--success);
+    background: var(--success-dim);
+    border: 1px solid rgba(79, 209, 139, 0.32);
+}
 
 /* ─── Compact section head ───────────────────────────────────────────────── */
 
 .section-head.compact {
     margin-top: 16px;
     margin-bottom: 8px;
-}
-
-/* ─── Objective list ─────────────────────────────────────────────────────── */
-
-.objective-list {
-    display: grid;
-    gap: 6px;
-    margin: 10px 0;
-    padding: 0 18px 0 0;
-    color: var(--muted);
-    font-size: 0.875rem;
 }
 
 /* ─── Event strip ────────────────────────────────────────────────────────── */
@@ -1098,82 +1312,6 @@ body.nav-open .nav-overlay { display: block; }
 
 .sidebar-signout-button svg { flex-shrink: 0; }
 
-/* ─── Boss damage feed ───────────────────────────────────────────────────── */
-
-.damage-feed { display: grid; gap: 6px; }
-
-.damage-feed-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 9px 12px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.02);
-    transition: background var(--transition);
-}
-
-.damage-feed-row:hover { background: rgba(255, 255, 255, 0.04); }
-
-.damage-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 8px;
-    border-radius: var(--radius-full);
-    font-size: 0.73rem;
-    font-weight: 700;
-    white-space: nowrap;
-    color: var(--danger);
-    background: var(--danger-dim);
-    border: 1px solid rgba(255, 93, 103, 0.28);
-    flex-shrink: 0;
-    direction: ltr;
-}
-
-.damage-feed-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-    font-size: 0.875rem;
-}
-
-.damage-feed-info small {
-    color: var(--muted);
-    font-size: 0.75rem;
-}
-
-/* ─── Boss trigger pills ─────────────────────────────────────────────────── */
-
-.boss-triggers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.trigger-pill {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 5px 12px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.03);
-    font-size: 0.8rem;
-    direction: ltr;
-}
-
-.trigger-category {
-    color: var(--text);
-    font-weight: 600;
-    text-transform: capitalize;
-}
-
-.trigger-damage {
-    color: var(--danger);
-    font-weight: 700;
-    font-size: 0.75rem;
-}
 
 /* ─── Daily limit info (smoking tracker) ────────────────────────────────── */
 

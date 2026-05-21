@@ -13,7 +13,6 @@ from django.utils import timezone
 from .models import (
     BonusClaim,
     Boss,
-    BossDamageLog,
     BossProgress,
     DailyQuest,
     GiftFund,
@@ -81,12 +80,6 @@ BONUS_REWARDS = {
     BonusClaim.PERFECT_DAY: {"xp": 100, "coins": 30, "label": "Perfect Day"},
 }
 
-BOSS_HP_BY_DIFFICULTY = {
-    "Common": 90,
-    "Rare": 120,
-    "Epic": 160,
-    "Legendary": 220,
-}
 
 
 @dataclass(frozen=True)
@@ -219,10 +212,6 @@ def get_chapter_name_for_user(user, week_start: date) -> str:
     return "The Reveal"
 
 
-def _boss_hp_for_template(template: WeeklyBossTemplate) -> int:
-    return BOSS_HP_BY_DIFFICULTY.get(template.difficulty, 120)
-
-
 def _active_boss_templates_without_previous(user, week_start: date):
     templates = list(WeeklyBossTemplate.objects.filter(is_active=True))
     if len(templates) <= 1:
@@ -246,13 +235,10 @@ def generate_weekly_content(user, weekly_run: WeeklyRun) -> None:
         boss_templates = _active_boss_templates_without_previous(user, weekly_run.week_start)
         if boss_templates:
             template = random.choice(boss_templates)
-            max_hp = _boss_hp_for_template(template)
             WeeklyBossInstance.objects.create(
                 user=user,
                 weekly_run=weekly_run,
                 template=template,
-                current_hp=max_hp,
-                max_hp=max_hp,
             )
 
     if weekly_run.challenge_instances.count() < 2:
@@ -484,42 +470,56 @@ def get_boss_progress(user, boss: Boss, week_start: date | None = None) -> BossP
     return progress
 
 
+def _objectives_all_complete(instance: WeeklyBossInstance) -> bool:
+    for obj in instance.template.objectives:
+        target = int(obj.get("target", 1))
+        current = int(instance.objective_progress.get(obj["id"], 0))
+        if current < target:
+            return False
+    return bool(instance.template.objectives)
+
+
+def _maybe_clear_boss(user, instance: WeeklyBossInstance) -> bool:
+    if instance.cleared or not _objectives_all_complete(instance):
+        return False
+    instance.cleared = True
+    instance.save(update_fields=["cleared"])
+    tmpl = instance.template
+    award_reward(
+        user,
+        xp=tmpl.xp_reward,
+        coins=tmpl.coin_reward,
+        attribute_rewards=tmpl.attribute_rewards,
+        source="weekly_boss_clear",
+        source_key=f"{instance.pk}:{instance.weekly_run.week_start.isoformat()}",
+        note=tmpl.name,
+        event_date=instance.weekly_run.week_start,
+    )
+    return True
+
+
 @transaction.atomic
-def deal_boss_damage(user, instance_id: int, damage: int = 20) -> OperationResult:
+def tick_boss_objective(user, instance_id: int, objective_id: str) -> OperationResult:
     instance = (
         WeeklyBossInstance.objects.select_for_update()
         .select_related("template", "weekly_run")
         .get(pk=instance_id, user=user)
     )
     if instance.cleared:
-        return OperationResult(False, "این Boss برای این هفته Clear شده است.")
-
-    damage = max(1, int(damage))
-    instance.current_hp = max(0, instance.current_hp - damage)
-    cleared_now = instance.current_hp == 0
-    if cleared_now:
-        instance.cleared = True
-    instance.save(update_fields=["current_hp", "cleared"])
-
-    if cleared_now:
-        template = instance.template
-        award_reward(
-            user,
-            xp=template.xp_reward,
-            coins=template.coin_reward,
-            attribute_rewards=template.attribute_rewards,
-            source="weekly_boss_clear",
-            source_key=f"{instance.pk}:{instance.weekly_run.week_start.isoformat()}",
-            note=template.name,
-            event_date=instance.weekly_run.week_start,
-        )
-        return OperationResult(True, f"{template.name} Clear شد. +{template.xp_reward} XP")
-    return OperationResult(True, f"{damage} Damage وارد شد.")
-
-
-def clear_boss(user, instance_id: int) -> OperationResult:
-    instance = WeeklyBossInstance.objects.get(pk=instance_id, user=user)
-    return deal_boss_damage(user, instance_id, max(1, instance.current_hp))
+        return OperationResult(False, "این ماموریت این هفته تکمیل شده است.")
+    obj = next((o for o in instance.template.objectives if o["id"] == objective_id), None)
+    if not obj:
+        return OperationResult(False, "Objective پیدا نشد.")
+    target = int(obj.get("target", 1))
+    current = int(instance.objective_progress.get(objective_id, 0))
+    if current >= target:
+        return OperationResult(False, "این Objective قبلا کامل شده است.")
+    instance.objective_progress[objective_id] = current + 1
+    instance.save(update_fields=["objective_progress"])
+    cleared = _maybe_clear_boss(user, instance)
+    if cleared:
+        return OperationResult(True, f"{instance.template.name} کامل شد! +{instance.template.xp_reward} XP")
+    return OperationResult(True, f"{obj['label']} — پیشرفت ثبت شد.")
 
 
 @transaction.atomic
@@ -642,41 +642,44 @@ def adjust_smoking(user, selected_date: date, delta: int) -> SmokingLog:
     return log
 
 
-def apply_boss_auto_damage(
+def advance_boss_objective(
     user,
     source: str,
     quest_id: int | None = None,
     action_id: int | None = None,
 ) -> int:
+    """Auto-advance matching objectives when a quest or quick action is completed.
+    Returns number of objectives advanced (0 if none matched). Never raises."""
     try:
         weekly_run = WeeklyRun.objects.filter(user=user, is_active=True).first()
         if not weekly_run:
             return 0
         instance = (
             WeeklyBossInstance.objects.filter(user=user, weekly_run=weekly_run, cleared=False)
-            .select_related("template")
+            .select_related("template", "weekly_run")
             .first()
         )
-        if not instance or not instance.template.category_damage_map:
+        if not instance or not instance.template.objectives:
             return 0
 
         category = None
-        source_name = ""
         if source == "quest" and quest_id:
             quest = DailyQuest.objects.filter(pk=quest_id).first()
             if quest:
                 category = quest.category
-                source_name = quest.name
         elif source == "quick_action" and action_id:
             action = QuickAction.objects.filter(pk=action_id).first()
             if action:
                 category = action.category
-                source_name = action.name
 
         if not category:
             return 0
-        damage = int(instance.template.category_damage_map.get(category, 0))
-        if damage <= 0:
+
+        matching = [
+            o for o in instance.template.objectives
+            if not o.get("manual", False) and o.get("category") == category
+        ]
+        if not matching:
             return 0
 
         with transaction.atomic():
@@ -687,31 +690,17 @@ def apply_boss_auto_damage(
             )
             if locked.cleared:
                 return 0
-            locked.current_hp = max(0, locked.current_hp - damage)
-            cleared_now = locked.current_hp == 0
-            if cleared_now:
-                locked.cleared = True
-            locked.save(update_fields=["current_hp", "cleared"])
-            BossDamageLog.objects.create(
-                user=user,
-                boss_instance=locked,
-                damage=damage,
-                source=source,
-                source_name=source_name,
-            )
-            if cleared_now:
-                tmpl = locked.template
-                award_reward(
-                    user,
-                    xp=tmpl.xp_reward,
-                    coins=tmpl.coin_reward,
-                    attribute_rewards=tmpl.attribute_rewards,
-                    source="weekly_boss_clear",
-                    source_key=f"{locked.pk}:{locked.weekly_run.week_start.isoformat()}",
-                    note=tmpl.name,
-                    event_date=locked.weekly_run.week_start,
-                )
-        return damage
+            advanced = 0
+            for obj in matching:
+                target = int(obj.get("target", 1))
+                current = int(locked.objective_progress.get(obj["id"], 0))
+                if current < target:
+                    locked.objective_progress[obj["id"]] = current + 1
+                    advanced += 1
+            if advanced:
+                locked.save(update_fields=["objective_progress"])
+                _maybe_clear_boss(user, locked)
+        return advanced
     except Exception:
         return 0
 

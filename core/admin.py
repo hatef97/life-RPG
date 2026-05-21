@@ -3,7 +3,6 @@ from django.contrib import admin
 from .models import (
     BonusClaim,
     Boss,
-    BossDamageLog,
     BossProgress,
     DailyQuest,
     GiftFund,
@@ -122,13 +121,6 @@ class SmokingLogAdmin(admin.ModelAdmin):
     search_fields = ("user__username",)
 
 
-@admin.register(BossDamageLog)
-class BossDamageLogAdmin(admin.ModelAdmin):
-    list_display = ("user", "boss_instance", "damage", "source", "source_name", "created_at")
-    list_filter = ("source", "created_at")
-    search_fields = ("user__username", "source_name")
-
-
 @admin.register(MentalCheckIn)
 class MentalCheckInAdmin(admin.ModelAdmin):
     list_display = ("user", "date", "energy", "focus", "mood", "motivation", "stress", "control")
@@ -181,7 +173,7 @@ class WeeklyBossTemplateAdmin(admin.ModelAdmin):
 
 @admin.register(WeeklyBossInstance)
 class WeeklyBossInstanceAdmin(admin.ModelAdmin):
-    list_display = ("user", "template", "weekly_run", "current_hp", "max_hp", "cleared", "created_at")
+    list_display = ("user", "template", "weekly_run", "cleared", "created_at")
     list_filter = ("cleared", "template__difficulty", "weekly_run__week_start")
     search_fields = ("user__username", "template__name")
 

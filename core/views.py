@@ -9,7 +9,6 @@ from django.views.decorators.http import require_POST
 from .forms import GiftAmountForm, LoginForm, MentalCheckInForm, ReflectionForm, SignupForm
 from .models import (
     BonusClaim,
-    BossDamageLog,
     DailyQuest,
     MentalCheckIn,
     QuestCompletion,
@@ -18,20 +17,19 @@ from .models import (
     Reflection,
     SmokingLog,
     WeeklyArchive,
+    WeeklyBossInstance,
     WeeklyStats,
 )
 from .selectors import dashboard_context, gift_milestone_rows, profile_resources, shop_item_rows
 from .services import (
     adjust_gift_fund,
     adjust_smoking,
-    apply_boss_auto_damage,
+    advance_boss_objective,
     claim_daily_bonus,
     claim_quick_action,
-    clear_boss,
     complete_daily_quest,
     complete_weekly_challenge,
     compute_weekly_stats,
-    deal_boss_damage,
     ensure_profile,
     english_date,
     generate_weekly_archive,
@@ -42,6 +40,7 @@ from .services import (
     purchase_shop_item,
     save_checkin,
     save_reflection,
+    tick_boss_objective,
     today,
     uncomplete_daily_quest,
     xp_progress,
@@ -148,7 +147,7 @@ def complete_quest_view(request, quest_id):
     result = complete_daily_quest(request.user, quest_id)
     flash_result(request, result)
     if result.ok:
-        apply_boss_auto_damage(request.user, "quest", quest_id=quest_id)
+        advance_boss_objective(request.user, "quest", quest_id=quest_id)
     return redirect("daily_quests")
 
 
@@ -179,8 +178,43 @@ def claim_quick_action_view(request, action_id):
     result = claim_quick_action(request.user, action_id)
     flash_result(request, result)
     if result.ok:
-        apply_boss_auto_damage(request.user, "quick_action", action_id=action_id)
+        advance_boss_objective(request.user, "quick_action", action_id=action_id)
     return redirect("quick_actions")
+
+
+def _boss_objectives_data(boss) -> list:
+    if not boss:
+        return []
+    objectives_data = []
+    for obj in (boss.template.objectives or []):
+        target = int(obj.get("target", 1))
+        current = min(int(boss.objective_progress.get(obj["id"], 0)), target)
+        pct = int(current * 100 / target) if target > 0 else 0
+        objectives_data.append({
+            "id": obj["id"],
+            "label": obj.get("label", obj["id"]),
+            "manual": obj.get("manual", False),
+            "category": obj.get("category"),
+            "current": current,
+            "target": target,
+            "percent": pct,
+            "done": current >= target,
+        })
+    return objectives_data
+
+
+def _boss_overall_percent(boss) -> int:
+    if not boss:
+        return 0
+    objectives = boss.template.objectives or []
+    if not objectives:
+        return 100 if boss.cleared else 0
+    total_target = sum(int(o.get("target", 1)) for o in objectives)
+    total_current = sum(
+        min(int(boss.objective_progress.get(o["id"], 0)), int(o.get("target", 1)))
+        for o in objectives
+    )
+    return int(total_current * 100 / total_target) if total_target else 0
 
 
 @login_required
@@ -189,28 +223,15 @@ def boss_arena(request):
     boss = getattr(weekly_run, "boss_instance", None)
     context = {"weekly_run": weekly_run, "boss": boss}
     if boss:
-        context["boss_percent"] = percent(boss.max_hp - boss.current_hp, boss.max_hp)
-        context["remaining"] = boss.current_hp
-        context["damage_logs"] = BossDamageLog.objects.filter(boss_instance=boss)[:20]
-        damage_map = boss.template.category_damage_map or {}
-        context["damage_triggers"] = [
-            {"category": cat, "damage": dmg} for cat, dmg in damage_map.items()
-        ]
+        context["objectives_data"] = _boss_objectives_data(boss)
+        context["boss_percent"] = _boss_overall_percent(boss)
     return render(request, "core/boss_arena.html", context)
 
 
 @login_required
 @require_POST
-def damage_boss_view(request, instance_id):
-    damage = request.POST.get("damage", 20)
-    flash_result(request, deal_boss_damage(request.user, instance_id, damage))
-    return redirect("boss_arena")
-
-
-@login_required
-@require_POST
-def clear_boss_view(request, instance_id):
-    flash_result(request, clear_boss(request.user, instance_id))
+def tick_boss_objective_view(request, instance_id, objective_id):
+    flash_result(request, tick_boss_objective(request.user, instance_id, objective_id))
     return redirect("boss_arena")
 
 
@@ -224,7 +245,8 @@ def weekly_content(request):
         {
             "weekly_run": weekly_run,
             "boss": boss,
-            "boss_percent": percent(boss.max_hp - boss.current_hp, boss.max_hp) if boss else 0,
+            "boss_percent": _boss_overall_percent(boss),
+            "objectives_data": _boss_objectives_data(boss),
             "challenges": weekly_run.challenge_instances.select_related("template"),
             "random_event": getattr(weekly_run, "random_event", None),
         },

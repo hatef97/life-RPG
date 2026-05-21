@@ -5,7 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#060910">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>{% block title %}Hatef Life RPG OS{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'core/favicon.svg' %}">
+    <link rel="apple-touch-icon" href="{% static 'core/favicon.svg' %}">
     <!-- Critical: set dark background immediately so no white flash on load -->
     <style>html,body{background:#060910;color:#eee9d4}</style>
     <link rel="stylesheet" href="{% static 'core/styles.css' %}">

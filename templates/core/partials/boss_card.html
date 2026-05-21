@@ -1,35 +1,60 @@
 <article class="boss-card {% if boss.cleared %}is-cleared{% endif %}">
-    <div class="card-head">
-        <div>
-            <p class="eyebrow">{{ boss.template.difficulty }} · {{ boss.template.category }}</p>
-            <h3>{{ boss.template.name }}</h3>
+    <div class="boss-card-header">
+        <div class="boss-card-meta">
+            <div class="boss-difficulty-badge boss-difficulty-{{ boss.template.difficulty|lower }}">{{ boss.template.difficulty }}</div>
+            <span class="boss-card-category">{{ boss.template.category }}</span>
         </div>
-        <span class="boss-hp">{{ boss.current_hp }} HP</span>
+        <div class="boss-overall-progress">
+            <span class="boss-percent-label">{{ boss_percent }}%</span>
+        </div>
     </div>
-    <p>{{ boss.template.description }}</p>
-    {% include "core/partials/progress_bar.html" with label="Boss HP Damage" value=boss.current_hp percent=boss_percent tone="danger" meta=boss.max_hp %}
-    <ul class="objective-list">
-        {% for objective in boss.template.objectives %}
-            <li>{{ objective }}</li>
+
+    <h3 class="boss-card-title">{{ boss.template.name }}</h3>
+    {% if boss.template.description %}
+        <p class="boss-card-desc">{{ boss.template.description }}</p>
+    {% endif %}
+
+    <div class="boss-progress-track">
+        <div class="boss-progress-bar" style="width: {{ boss_percent }}%" aria-valuenow="{{ boss_percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    {% if objectives_data %}
+    <ul class="boss-objectives">
+        {% for obj in objectives_data %}
+        <li class="boss-objective {% if obj.done %}is-done{% endif %}">
+            <div class="boss-obj-check">
+                {% if obj.done %}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {% endif %}
+            </div>
+            <div class="boss-obj-body">
+                <span class="boss-obj-label">{{ obj.label }}</span>
+                <div class="boss-obj-track">
+                    <div class="boss-obj-fill" style="width: {{ obj.percent }}%"></div>
+                </div>
+            </div>
+            <div class="boss-obj-count">{{ obj.current }}/{{ obj.target }}</div>
+            {% if obj.manual and not obj.done and not boss.cleared %}
+            <form method="post" action="{% url 'tick_boss_objective' boss.id obj.id %}">
+                {% csrf_token %}
+                <button class="boss-obj-tick" type="submit" title="Mark progress">+1</button>
+            </form>
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
-    <div class="reward-row">
-        <span>Reward: {{ boss.template.xp_reward }} XP</span>
-        <span>{{ boss.template.coin_reward }} Coins</span>
-    </div>
-    {% if boss.cleared %}
-        <button class="secondary-button full" type="button" disabled>Cleared This Week</button>
-    {% else %}
-        <div class="boss-actions">
-            <form method="post" action="{% url 'damage_boss' boss.id %}">
-                {% csrf_token %}
-                <input type="hidden" name="damage" value="20">
-                <button class="primary-button" type="submit">Deal 20 DMG</button>
-            </form>
-            <form method="post" action="{% url 'clear_boss' boss.id %}">
-                {% csrf_token %}
-                <button class="ghost-button" type="submit">Clear</button>
-            </form>
-        </div>
     {% endif %}
+
+    <div class="boss-card-footer">
+        <div class="boss-reward-row">
+            <span class="boss-reward-pill">+{{ boss.template.xp_reward }} XP</span>
+            <span class="boss-reward-pill boss-reward-coin">{{ boss.template.coin_reward }} Coins</span>
+        </div>
+        {% if boss.cleared %}
+        <div class="boss-cleared-badge">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7L5.5 10L11.5 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Completed This Week
+        </div>
+        {% endif %}
+    </div>
 </article>

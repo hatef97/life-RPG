@@ -40,7 +40,7 @@
         </div>
         <p class="muted">Week: {{ weekly_run.week_start|englishdate }} تا {{ weekly_run.week_end|englishdate }}</p>
         {% if weekly_boss %}
-            {% include "core/partials/progress_bar.html" with label=weekly_boss.template.name value=weekly_boss.current_hp percent=weekly_boss_percent tone="danger" meta="HP" %}
+            {% include "core/partials/progress_bar.html" with label=weekly_boss.template.name value=weekly_boss_percent percent=weekly_boss_percent tone="gold" meta="%" %}
         {% endif %}
         <div class="mini-list">
             {% for challenge in weekly_challenges %}

@@ -19,6 +19,20 @@ from .services import (
 )
 
 
+def _boss_overall_percent_selector(boss) -> int:
+    if not boss:
+        return 0
+    objectives = boss.template.objectives or []
+    if not objectives:
+        return 100 if boss.cleared else 0
+    total_target = sum(int(o.get("target", 1)) for o in objectives)
+    total_current = sum(
+        min(int(boss.objective_progress.get(o["id"], 0)), int(o.get("target", 1)))
+        for o in objectives
+    )
+    return int(total_current * 100 / total_target) if total_target else 0
+
+
 ATTRIBUTE_LABELS = {
     "intelligence": "Intelligence",
     "discipline": "Discipline",
@@ -148,7 +162,7 @@ def dashboard_context(user):
         "achievements": achievement_preview(user),
         "weekly_run": weekly_run,
         "weekly_boss": weekly_boss,
-        "weekly_boss_percent": percent(weekly_boss.max_hp - weekly_boss.current_hp, weekly_boss.max_hp) if weekly_boss else 0,
+        "weekly_boss_percent": _boss_overall_percent_selector(weekly_boss),
         "weekly_challenges": weekly_run.challenge_instances.select_related("template"),
         "weekly_event": getattr(weekly_run, "random_event", None),
         "daily_quest_preview": daily_quest_preview(user),

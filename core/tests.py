@@ -24,10 +24,10 @@ from .models import (
 from .services import (
     adjust_gift_fund,
     claim_daily_bonus,
-    clear_boss,
     complete_daily_quest,
     get_or_create_current_week,
     purchase_shop_item,
+    tick_boss_objective,
     today,
     uncomplete_daily_quest,
 )
@@ -96,9 +96,12 @@ class RewardMechanicsTests(TestCase):
     def test_weekly_boss_clear_awards_once(self):
         weekly_run = get_or_create_current_week(self.user, date(2026, 5, 4))
         boss = weekly_run.boss_instance
+        # Give the template a single manual objective so ticking it clears the boss
+        boss.template.objectives = [{"id": "test_obj", "label": "Test", "target": 1, "manual": True}]
+        boss.template.save(update_fields=["objectives"])
 
-        first = clear_boss(self.user, boss.id)
-        second = clear_boss(self.user, boss.id)
+        first = tick_boss_objective(self.user, boss.id, "test_obj")
+        second = tick_boss_objective(self.user, boss.id, "test_obj")
         self.user.profile.refresh_from_db()
 
         self.assertTrue(first.ok)
@@ -155,12 +158,13 @@ class WeeklyRunTests(TestCase):
         RandomEventTemplate.objects.create(title="Focus Window", ordering=2)
 
     def test_same_week_does_not_regenerate_content(self):
-        first = get_or_create_current_week(self.user, date(2026, 5, 4))
+        # May 3 (Sun) and May 7 (Thu) are both in the Sat-to-Fri week starting May 2
+        first = get_or_create_current_week(self.user, date(2026, 5, 3))
         boss_id = first.boss_instance.template_id
         challenge_ids = list(first.challenge_instances.order_by("id").values_list("template_id", flat=True))
         event_id = first.random_event.template_id
 
-        second = get_or_create_current_week(self.user, date(2026, 5, 9))
+        second = get_or_create_current_week(self.user, date(2026, 5, 7))
 
         self.assertEqual(first.id, second.id)
         self.assertEqual(second.boss_instance.template_id, boss_id)
